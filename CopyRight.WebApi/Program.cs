@@ -68,7 +68,11 @@ builder.Services.AddSwaggerGen(c =>
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddDbContext<CopyRightContext>(options => options.UseSqlServer("Server=.;Database=CopyRight;TrustServerCertificate=True;Trusted_Connection=True;"));
+
+builder.Services.AddDbContext<CopyRightContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("Host=dpg-cqkalq2ju9rs738jmrag-a.singapore-postgres.render.com;Port=5432;Database=copyrightdb;Username=copyrightdb_user;Password=RvXri1TomeRGZIq4MsJVzrmPrNGQvGj0;")));
+
+//builder.Services.AddDbContext<CopyRightContext>(options => options.UseSqlServer("Server=.;Database=CopyRight;TrustServerCertificate=True;Trusted_Connection=True;"));
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<GoogleDriveService>();
 builder.Services.AddScoped(typeof(IDocument), typeof(DocumentService));
