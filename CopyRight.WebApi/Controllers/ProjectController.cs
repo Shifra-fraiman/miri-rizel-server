@@ -72,6 +72,7 @@ namespace CopyRight.WebApi.Controllers
             List<Projects> p = await _BlProject.ReadAsync(o => o.IsActive == false);
             return Ok(p);
         }
+
         [Authorize(Policy = "Worker")]
         [Route("getAllTasks")]
         [HttpGet]
