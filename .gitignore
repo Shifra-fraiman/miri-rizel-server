@@ -115,3 +115,5 @@ Desktop.ini
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
+CopyRight.Bl/Resources/credentials.json
+CopyRight.WebApi/Resources/credentials.json
