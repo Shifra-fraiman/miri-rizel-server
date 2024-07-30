@@ -16,8 +16,6 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-
 // הגדרת אימות JWT
 builder.Services.AddAuthentication(options =>
 {
