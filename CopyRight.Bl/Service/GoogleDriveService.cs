@@ -16,7 +16,7 @@ namespace CopyRight.Bl.Service
 
         public GoogleDriveService()
         {
-            var credential = GoogleCredential.FromFile("Resources/data.json")
+            var credential = GoogleCredential.FromFile("Resources/credentials.json")
                 .CreateScoped(Scopes);
 
             _driveService = new DriveService(new BaseClientService.Initializer()
