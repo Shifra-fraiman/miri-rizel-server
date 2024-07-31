@@ -126,5 +126,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapGet("/", () => "Hello World!");
+app.MapGet("/Home", () => "Home Page Work!");
 
 app.Run();
