@@ -86,6 +86,18 @@ builder.Services.AddScoped(typeof(CopyRight.Dal.Interfaces.IProject), typeof(Cop
 builder.Services.AddScoped(typeof(ICommunication), typeof(CommunicationService));
 builder.Services.AddScoped(typeof(CopyRight.Dal.Interfaces.ICommunication), typeof(CopyRight.Dal.Service.CommunicationService));
 builder.Services.AddScoped<DalManager>();
+builder.Services.AddScoped(typeof(IPriorityCode), typeof(PriorityCodeService));
+builder.Services.AddScoped(typeof(CopyRight.Dal.Interfaces.IPriorityCode), typeof(CopyRight.Dal.Service.PriorityCodeService));
+builder.Services.AddScoped(typeof(IRoleCode), typeof(RoleCodeService));
+builder.Services.AddScoped(typeof(CopyRight.Dal.Interfaces.IRoleCode), typeof(CopyRight.Dal.Service.RoleCodeService));
+builder.Services.AddScoped(typeof(IRelatedToCode), typeof(RelatedCodeService));
+builder.Services.AddScoped(typeof(CopyRight.Dal.Interfaces.IRealatedToCode), typeof(CopyRight.Dal.Service.RelatedCodeService));
+builder.Services.AddScoped(typeof(IStatusCodeProject), typeof(StatusCodeProjectService));
+builder.Services.AddScoped(typeof(CopyRight.Dal.Interfaces.IStatusCodeProject), typeof(CopyRight.Dal.Service.StatusCodeProjectService));
+builder.Services.AddScoped(typeof(IStatusCodeUser), typeof(StatusCodeUserService));
+builder.Services.AddScoped(typeof(CopyRight.Dal.Interfaces.IStatusCodeUser), typeof(CopyRight.Dal.Service.StatusCodeUserService));
+
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
