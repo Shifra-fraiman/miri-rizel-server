@@ -144,7 +144,6 @@ $RECYCLE.BIN/
 *.nuget.cache
 *.sourcelink.json
 *.props
-*.json
 *.editorconfig
 /Bl/obj/
 /Bl/bin/
