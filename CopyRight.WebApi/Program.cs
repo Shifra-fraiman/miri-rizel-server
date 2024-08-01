@@ -68,7 +68,8 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<CopyRightContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("Host=dpg-cqkalq2ju9rs738jmrag-a.singapore-postgres.render.com;Port=5432;Database=copyrightdb;Username=copyrightdb_user;Password=RvXri1TomeRGZIq4MsJVzrmPrNGQvGj0;")));
+//PGPASSWORD=M1HONrwZnY85hnyBMraOFUomYoWzBDNz psql -h dpg-cqlndt08fa8c73b73c3g-a.singapore-postgres.render.com -U miri_rizel copyrightdb_ue70
+    options.UseNpgsql(builder.Configuration.GetConnectionString("Host=dpg-cqlndt08fa8c73b73c3g-a.singapore-postgres.render.com;Port=5432;Database=copyrightdb_ue70;Username=miri_rizel;Password=M1HONrwZnY85hnyBMraOFUomYoWzBDNz;")));
 
 //builder.Services.AddDbContext<CopyRightContext>(options => options.UseSqlServer("Server=.;Database=CopyRight;TrustServerCertificate=True;Trusted_Connection=True;"));
 builder.Services.AddAutoMapper(typeof(Program));
