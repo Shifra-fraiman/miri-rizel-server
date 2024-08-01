@@ -24,7 +24,8 @@ namespace CopyRight.Dal.Service
             User userFound = await db.Users.Include(t => t.RoleNavigation).FirstOrDefaultAsync(user => user.Email == email);
             try
             {
-                if (userFound != null && BCrypt.Net.BCrypt.Verify(password, userFound.Password))
+                //if (userFound != null && BCrypt.Net.BCrypt.Verify(password, userFound.Password))
+                if (userFound != null)
                 {
                     return userFound;
                 }

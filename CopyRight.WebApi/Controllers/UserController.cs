@@ -25,13 +25,22 @@ namespace CopyRight.WebApi.Controllers
         {
             try
             {
+
                 if (email == null || password == null)
-                    return BadRequest("Invalid firstName/lastName/email/password!");
+                {
+                    return BadRequest("Invalid email or password!"); // Return bad request if email or password is missing
+                }
+
                 User userFound = await _userService.LogInAsync(email, password);
-                Console.WriteLine(userFound == null);
+
                 if (userFound == null)
                 {
-                    return NotFound("User not found");
+                    return NotFound("User not found"); // Return not found if user with the provided email is not found
+                }
+
+                if (!BCrypt.Net.BCrypt.Verify(password, userFound.Password))
+                {
+                    return BadRequest("Incorrect password"); // Return bad request if the password is incorrect
                 }
                 // System.Console.WriteLine($"User: {userFound.FirstName} Login: {userFound.Password} Admin: {userFound.Role}");
                 var claims = new List<Claim>();
@@ -59,6 +68,7 @@ namespace CopyRight.WebApi.Controllers
                 throw new Exception(ex.Message);
             }
         }
+
         [HttpGet("LoginGoogle")]
         public async Task<ActionResult<User>> LoginGoogle([FromQuery(Name = "email")] string email, [FromQuery(Name = "name")] string name)
         {
