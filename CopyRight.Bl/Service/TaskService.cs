@@ -40,6 +40,11 @@ namespace CopyRight.Bl.Service
                 throw new Exception(ex.Message);
             }
         }
+        public async Task<List<Tasks>> ReadTaskAsync()
+        {
+
+            return mapper.Map<List<Dal.Models.Task>, List<Tasks>>(await dalManager.tasks.ReadAsync(o => o.Project.Authorize == 1));
+        }
         public async Task<bool> DeleteAsync(int id)
         {
             try
@@ -61,6 +66,26 @@ namespace CopyRight.Bl.Service
         public async Task<List<Tasks>> ReadAllAsync()
         {
             return mapper.Map<List<Dal.Models.Task>, List<Tasks>>(await dalManager.tasks.ReadAllAsync());
+        }
+        public async Task<bool> ReadTaskAuthAsync(int id)
+        {
+
+
+
+            try
+            {
+                bool l = await dalManager.tasks.ReadTaskAuthAsync(id);
+                if (l)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+
         }
 
 

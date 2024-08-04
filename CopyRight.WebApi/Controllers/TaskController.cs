@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using CopyRight.Bl.Interfaces;
 using CopyRight.Dto.Models;
 using Microsoft.AspNetCore.Authorization;
+using CopyRight.Bl.Service;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 namespace CopyRight.WebApi.Controllers
 {
     [Route("[controller]")]
@@ -52,8 +55,45 @@ namespace CopyRight.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Tasks>>> ReadAll()
         {
-            var tasks = await _taskService.ReadAllAsync();
-            return Ok(tasks);
+
+
+            string token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+            var tokenValidationParameters = TokenService.GetTokenValidationParameters();
+            var tokenHandler = new JwtSecurityTokenHandler();
+            try
+            {
+                tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken validatedToken);
+                var jwtToken = validatedToken as JwtSecurityToken;
+                var claims = jwtToken.Claims;
+                Console.WriteLine(claims);
+                var typeClaims = claims.Where(c => c.Type == "Type").Select(c => c.Value).ToList();
+                foreach (var typeClaim in typeClaims)
+                {
+                    Console.WriteLine($"Type Claim Value: {typeClaim}");
+                    if (typeClaims.Count > 0 && typeClaims[typeClaims.Count - 1] == "Worker")
+
+                    {
+                        List<Tasks> tasks = await _taskService.ReadTaskAsync();
+                        return Ok(tasks);
+
+                    }
+
+
+                    if (typeClaim == "Admin")
+                    {
+
+                        List<Tasks> tasks = await _taskService.ReadAllAsync();
+                        return Ok(tasks);
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return BadRequest("this authorize is not auth");
         }
 
         [Authorize(Policy = "Worker")]
@@ -78,16 +118,62 @@ namespace CopyRight.WebApi.Controllers
         [Route("GetById")]
         public async Task<ActionResult<Tasks>> GetByIdAsync([FromQuery(Name = "id")] int id)
         {
+
+            string token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+            var tokenValidationParameters = TokenService.GetTokenValidationParameters();
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+
+
+
             try
             {
-                var tasks = await _taskService.GetById(id);
-                return Ok(tasks);
+
+                tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken validatedToken);
+                var jwtToken = validatedToken as JwtSecurityToken;
+                var claims = jwtToken.Claims;
+                Console.WriteLine(claims);
+                var typeClaims = claims.Where(c => c.Type == "Type").Select(c => c.Value).ToList();
+                foreach (var typeClaim in typeClaims)
+                {
+                    Console.WriteLine($"Type Claim Value: {typeClaim}");
+                    if (typeClaims.Count > 0 && typeClaims[typeClaims.Count - 1] == "Worker")
+
+                    {
+                        bool checkauth = await _taskService.ReadTaskAuthAsync(id);
+
+                        if (checkauth)
+                        {
+                            var tasks = await _taskService.GetById(id);
+                            return Ok(tasks);
+                        }
+                        else if (!checkauth)
+                        {
+                            return BadRequest("this task is not auth");
+                        }
+
+                    }
+
+
+
+
+                    if (typeClaim == "Admin")
+                    {
+
+                        var tasks = await _taskService.GetById(id);
+                        return Ok(tasks);
+                    }
+                }
+
             }
             catch
             {
                 return null;
             }
+            return Ok("ok");
         }
+       
        [Authorize(Policy = "Worker")]
         [HttpGet]
        [Route("ReadAllStatus")]

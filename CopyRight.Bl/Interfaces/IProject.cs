@@ -15,5 +15,8 @@ namespace CopyRight.Bl.Interfaces
         bool IsCorrectDates(DateTime? start, DateTime? end);
         bool IsOnlyLetters(string input);
         Task<Projects> GetByIdAsync(int id);
+        Task<bool> ReadTaskAuthAsync(int id);
+        Task<List<Projects>> ReadProjectAsync();
+       
     }
 }
