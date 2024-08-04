@@ -185,7 +185,7 @@ namespace CopyRight.WebApi.Controllers
                 else throw new Exception(ex.Message);
             }
         }
-        [Authorize(Policy = "Worker")]
+        //[Authorize(Policy = "Worker")]
         [HttpGet("GetByEmail")]
         public async Task<ActionResult<User>> GetByEmail([FromQuery(Name = "email")] string email)
         {

@@ -24,6 +24,7 @@ namespace CopyRight.WebApi.Controllers
 
 
         [HttpPost]
+
         public async Task<ActionResult<Documents>> AddDocument([FromBody] Documents document, [FromQuery(Name = "name")] string name)
         {
             if (document == null)

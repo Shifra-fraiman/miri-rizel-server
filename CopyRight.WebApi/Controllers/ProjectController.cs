@@ -34,17 +34,27 @@ namespace CopyRight.WebApi.Controllers
                 {
                     if (_BlProject.IsCorrectDates(newProject.StartDate, newProject.EndDate))
                     {
-                        if (await _BlProject.CreateAsync(newProject) != null)
+                        try
                         {
-                            return StatusCode(200, newProject);
+                            _BlProject.CreateAsync(newProject);
+                            return StatusCode(200, $"the project added succeful");
                         }
-                        return BadRequest(500);
+                        catch (Exception ex)
+                        {
+                            throw new Exception(ex.Message);
+
+                        }
+                        
                     }
-                    return StatusCode(400, $"the startDate is  after the endDate");
+                    else
+                        return StatusCode(400, $"the startDate is  after the endDate");
                 }
-                return StatusCode(400, $"the name isnt valid");
+                else
+                    return StatusCode(400, $"the name isnt valid");
             }
-            return StatusCode(400, $"This customer not exist on db");
+            else
+                return StatusCode(400, $"This customer not exist on db");
+
 
 
         }

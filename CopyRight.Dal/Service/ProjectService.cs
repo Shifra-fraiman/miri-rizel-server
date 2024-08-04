@@ -23,9 +23,9 @@ namespace CopyRight.Dal.Service
                 await db.SaveChangesAsync();
                 return item;
             }
-            catch
+            catch(Exception ex) 
             {
-                return null;
+                throw new Exception(ex.Message);
             }
         }
         public async Task<bool> DeleteAsync(int i)
