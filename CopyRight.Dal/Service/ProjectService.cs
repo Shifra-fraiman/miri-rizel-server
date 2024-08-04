@@ -19,9 +19,12 @@ namespace CopyRight.Dal.Service
         {
             try
             {
-          
+                item.StartDate = EnsureUtc(item.StartDate);
+                item.EndDate = EnsureUtc(item.EndDate);
+                item.CreatedDate = EnsureUtc(item.CreatedDate);
                 item.IsActive=true;
                 await db.Projects.AddAsync(item);
+
                 await db.SaveChangesAsync();
                 return item;
             }
@@ -30,7 +33,18 @@ namespace CopyRight.Dal.Service
                 throw new Exception(ex.Message);
             }
         }
-     
+        private DateTime? EnsureUtc(DateTime? dateTime)
+        {
+            if (dateTime.HasValue)
+            {
+                if (dateTime.Value.Kind == DateTimeKind.Unspecified)
+                {
+                    return DateTime.SpecifyKind(dateTime.Value, DateTimeKind.Utc);
+                }
+                return dateTime.Value.ToUniversalTime();
+            }
+            return null;
+        }
         public async Task<bool> DeleteAsync(int i)
         {
             try
