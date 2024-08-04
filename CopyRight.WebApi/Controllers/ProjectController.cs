@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CopyRight.WebApi.Controllers
 {
@@ -31,17 +32,20 @@ namespace CopyRight.WebApi.Controllers
                 {
                     if (_BlProject.IsCorrectDates(newProject.StartDate, newProject.EndDate))
                     {
-                        if (await _BlProject.CreateAsync(newProject) != null)
-                        {
+                        if(await _BlProject.CreateAsync(newProject)!=null)
+                        
                             return StatusCode(200, newProject);
-                        }
-                        return BadRequest(500);
+                        return BadRequest("add faild");
                     }
-                    return StatusCode(400, $"the startDate is  after the endDate");
+                    else
+                        return StatusCode(400, $"the startDate is  after the endDate");
                 }
-                return StatusCode(400, $"the name isnt valid");
+                else
+                    return StatusCode(400, $"the name isnt valid");
             }
-            return StatusCode(400, $"This customer not exist on db");
+            else
+                return StatusCode(400, $"This customer not exist on db");
+
 
 
         }
