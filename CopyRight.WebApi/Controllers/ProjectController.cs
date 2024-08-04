@@ -34,7 +34,7 @@ namespace CopyRight.WebApi.Controllers
                     {
                         if(await _BlProject.CreateAsync(newProject)!=null)
                         
-                            return StatusCode(200, newProject);
+                            return StatusCode(200, _BlProject.CreateAsync(newProject));
                         return BadRequest("add faild");
                     }
                     else
