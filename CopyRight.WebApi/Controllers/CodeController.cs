@@ -1,4 +1,5 @@
 ﻿using CopyRight.Dto.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,6 +25,8 @@ namespace CopyRight.WebApi.Controllers
         }
         [Route("getAllPriorities")]
         [HttpGet]
+        [Authorize(Policy = "Worker")]
+
         public async Task<ActionResult<List<PriorityCode>>> ReadAll()
         {
             try
@@ -39,6 +42,8 @@ namespace CopyRight.WebApi.Controllers
         }
         [Route("getAllStatusProject")]
         [HttpGet]
+        [Authorize(Policy = "Worker")]
+
         public async Task<ActionResult<List<StatusCodeProject>>> ReadAllsp()
         {
             try
@@ -54,6 +59,8 @@ namespace CopyRight.WebApi.Controllers
         }
         [Route("getAllStatusUser")]
         [HttpGet]
+        [Authorize(Policy = "Worker")]
+
         public async Task<ActionResult<List<StatusCodeUser>>> ReadAllsu()
         {
             try
@@ -69,6 +76,8 @@ namespace CopyRight.WebApi.Controllers
         }
         [Route("getAllRoles")]
         [HttpGet]
+        [Authorize(Policy = "Worker")]
+
         public async Task<ActionResult<List<RoleCode>>> ReadAllRoles()
         {
             try
@@ -84,6 +93,8 @@ namespace CopyRight.WebApi.Controllers
         }
         [Route("getAllReletedCode")]
         [HttpGet]
+        [Authorize(Policy = "Worker")]
+
         public async Task<ActionResult<List<relatedToCode>>> ReadAllReleted()
         {
             try
@@ -99,6 +110,8 @@ namespace CopyRight.WebApi.Controllers
         }
         [Route("CreateRole")]
         [HttpPost]
+        [Authorize(Policy = "Worker")]
+
         public async Task<ActionResult<RoleCode>> CreateAsync([FromBody] RoleCode c)
         {
             try
@@ -116,6 +129,8 @@ namespace CopyRight.WebApi.Controllers
 
         [Route("CreatePriority")]
         [HttpPost]
+        [Authorize(Policy = "Worker")]
+
         public async Task<ActionResult<PriorityCode>> CreateAsyncp([FromBody] PriorityCode c)
         {
             try
@@ -132,6 +147,8 @@ namespace CopyRight.WebApi.Controllers
         }
         [Route("CreateReleted")]
         [HttpPost]
+        [Authorize(Policy = "Worker")]
+
         public async Task<ActionResult<relatedToCode>> CreateAsync([FromBody] relatedToCode c)
         {
             try
@@ -148,6 +165,8 @@ namespace CopyRight.WebApi.Controllers
         }
         [Route("CreateStatusProject")]
         [HttpPost]
+        [Authorize(Policy = "Worker")]
+
         public async Task<ActionResult<StatusCodeProject>> CreateAsync([FromBody] StatusCodeProject c)
         {
             try
