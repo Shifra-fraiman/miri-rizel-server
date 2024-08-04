@@ -35,13 +35,14 @@ namespace CopyRight.WebApi.Controllers
                         try
                         {
                             _BlProject.CreateAsync(newProject);
+                            return StatusCode(200, $"the project added succeful");
                         }
                         catch (Exception ex)
                         {
                             throw new Exception(ex.Message);
 
                         }
-                        return StatusCode(200, $"the project added succeful");
+                        
                     }
                     else
                         return StatusCode(400, $"the startDate is  after the endDate");
