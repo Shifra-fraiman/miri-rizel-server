@@ -259,7 +259,7 @@ namespace CopyRight.Bl.Service
                 //var logo = new LinkedResource(logoPath, MediaTypeNames.Image.Jpeg)
                 //{
                  //   ContentId = "logo"
-                //};
+                //};*/
                 var htmlView = AlternateView.CreateAlternateViewFromString(body, null, MediaTypeNames.Text.Html);
                 //htmlView.LinkedResources.Add(logo);
                 message.AlternateViews.Add(htmlView);
