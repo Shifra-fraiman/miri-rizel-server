@@ -183,10 +183,10 @@ namespace CopyRight.Bl.Service
             bool enableSsl = true;
 
             // קבלת הנתיב הנוכחי של הקובץ UserService.cs
-            //string currentFolder = Directory.GetCurrentDirectory();
+           // string currentFolder = Directory.GetCurrentDirectory();
             // בניית נתיב לתיקייה בה נמצאת התמונה
-            //string logoPath = Path.Combine(currentFolder, "..", "logo.jpeg");
-            //logoPath = Path.GetFullPath(logoPath); // הופך את הנתיב לנתיב מוחלט
+           // string logoPath = Path.Combine(currentFolder, "..", "logo.jpeg");
+           // logoPath = Path.GetFullPath(logoPath); // הופך את הנתיב לנתיב מוחלט
 
             using (var client = new SmtpClient(smtpHost, smtpPort))
             {
@@ -198,8 +198,6 @@ namespace CopyRight.Bl.Service
                 message.From = new MailAddress(smtpUsername, "CopyRight-noreply");
                 message.To.Add(email);
                 message.Subject = "בקשתך לאיפוס סיסמה";
-                message.Body = $"!נרשם בהצלחה ";
-                
                 message.IsBodyHtml = true; // הגדרת גוף המייל כ-HTML
 
                 string contactDetails = $@"{smtpUsername} :צור קשר ";
@@ -258,10 +256,10 @@ namespace CopyRight.Bl.Service
                 message.Body = body;
                 /*
                 // צירוף הלוגו למייל
-                var logo = new LinkedResource(logoPath, MediaTypeNames.Image.Jpeg)
-                {
-                    ContentId = "logo"
-                };*/
+                //var logo = new LinkedResource(logoPath, MediaTypeNames.Image.Jpeg)
+                //{
+                 //   ContentId = "logo"
+                //};
                 var htmlView = AlternateView.CreateAlternateViewFromString(body, null, MediaTypeNames.Text.Html);
                 //htmlView.LinkedResources.Add(logo);
                 message.AlternateViews.Add(htmlView);
@@ -336,3 +334,4 @@ namespace CopyRight.Bl.Service
     }
 }
 
+   

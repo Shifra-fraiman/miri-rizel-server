@@ -16,7 +16,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// äâãøú àéîåú JWT
+// Ã¤Ã¢Ã£Ã¸Ãº Ã Ã©Ã®Ã¥Ãº JWT
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -38,7 +38,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
 
-    // äåñôú äâãøú Authorization ì-Swagger
+    // Ã¤Ã¥Ã±Ã´Ãº Ã¤Ã¢Ã£Ã¸Ãº Authorization Ã¬-Swagger
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
@@ -68,7 +68,8 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<CopyRightContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("Host=dpg-cqkalq2ju9rs738jmrag-a.singapore-postgres.render.com;Port=5432;Database=copyrightdb;Username=copyrightdb_user;Password=RvXri1TomeRGZIq4MsJVzrmPrNGQvGj0;")));
+//PGPASSWORD=M1HONrwZnY85hnyBMraOFUomYoWzBDNz psql -h dpg-cqlndt08fa8c73b73c3g-a.singapore-postgres.render.com -U miri_rizel copyrightdb_ue70
+    options.UseNpgsql(builder.Configuration.GetConnectionString("Host=dpg-cqlndt08fa8c73b73c3g-a.singapore-postgres.render.com;Port=5432;Database=copyrightdb_ue70;Username=miri_rizel;Password=M1HONrwZnY85hnyBMraOFUomYoWzBDNz;")));
 
 //builder.Services.AddDbContext<CopyRightContext>(options => options.UseSqlServer("Server=.;Database=CopyRight;TrustServerCertificate=True;Trusted_Connection=True;"));
 builder.Services.AddAutoMapper(typeof(Program));
@@ -86,6 +87,18 @@ builder.Services.AddScoped(typeof(CopyRight.Dal.Interfaces.IProject), typeof(Cop
 builder.Services.AddScoped(typeof(ICommunication), typeof(CommunicationService));
 builder.Services.AddScoped(typeof(CopyRight.Dal.Interfaces.ICommunication), typeof(CopyRight.Dal.Service.CommunicationService));
 builder.Services.AddScoped<DalManager>();
+builder.Services.AddScoped(typeof(IPriorityCode), typeof(PriorityCodeService));
+builder.Services.AddScoped(typeof(CopyRight.Dal.Interfaces.IPriorityCode), typeof(CopyRight.Dal.Service.PriorityCodeService));
+builder.Services.AddScoped(typeof(IRoleCode), typeof(RoleCodeService));
+builder.Services.AddScoped(typeof(CopyRight.Dal.Interfaces.IRoleCode), typeof(CopyRight.Dal.Service.RoleCodeService));
+builder.Services.AddScoped(typeof(IRelatedToCode), typeof(RelatedCodeService));
+builder.Services.AddScoped(typeof(CopyRight.Dal.Interfaces.IRealatedToCode), typeof(CopyRight.Dal.Service.RelatedCodeService));
+builder.Services.AddScoped(typeof(IStatusCodeProject), typeof(StatusCodeProjectService));
+builder.Services.AddScoped(typeof(CopyRight.Dal.Interfaces.IStatusCodeProject), typeof(CopyRight.Dal.Service.StatusCodeProjectService));
+builder.Services.AddScoped(typeof(IStatusCodeUser), typeof(StatusCodeUserService));
+builder.Services.AddScoped(typeof(CopyRight.Dal.Interfaces.IStatusCodeUser), typeof(CopyRight.Dal.Service.StatusCodeUserService));
+
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
@@ -104,11 +117,11 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 app.UseRouting();
 
 app.UseCors(builder =>
