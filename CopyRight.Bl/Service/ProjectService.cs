@@ -2,7 +2,6 @@
 using CopyRight.Bl.Interfaces;
 using CopyRight.Dal;
 using CopyRight.Dal.Models;
-using CopyRight.Dal.Service;
 using CopyRight.Dto.Models;
 using System;
 using System.Collections.Generic;
@@ -34,21 +33,9 @@ namespace CopyRight.Bl.Service
         public async Task<Projects> CreateAsync(Projects item)
         {
 
-           
-            var project = new Project
-            {
-                CreatedDate = DateTime.UtcNow,
-                ProjectId = item.ProjectId,
-                Name = item.Name,
-                Description = item.Description,
-                StartDate = item.StartDate,
-                EndDate = item.EndDate,
-                Status = item.Status.Id,
-                CustomerId = item.Customer.CustomerId,
-                IsActive = true
-            };
-            return mapper.Map<Dto.Models.Projects>(await proj.CreateAsync(mapper.Map<Dal.Models.Project>(project)));
-
+            var newCustomer = mapper.Map<Dal.Models.Project>(item);
+            newCustomer.CreatedDate = DateTime.UtcNow;
+            return mapper.Map<Dto.Models.Projects>(await _dalManager.project.CreateAsync(newCustomer));
         }
 
         public async Task<bool> DeleteAsync(int id)
