@@ -20,8 +20,8 @@ namespace CopyRight.WebApi.Controllers
             _googleDriveService = googleDriveService;
         }
 
-       
-        //[Authorize(Policy = "Customer")]
+
+        [Authorize(Policy = "Admin")]
         [HttpPost("upload")]
         public async Task<string> UploadFile(IFormFile file,[FromQuery] string nameFolder)
         {
@@ -48,7 +48,7 @@ namespace CopyRight.WebApi.Controllers
                 }
             }
         }
-        [Authorize(Policy = "Worker")]
+        [Authorize(Policy = "Admin")]
         [HttpGet("folders")]
         public async Task<ActionResult> GetFolders()
         {
@@ -65,7 +65,7 @@ namespace CopyRight.WebApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
-         [Authorize(Policy = "Worker")]
+        [Authorize(Policy = "Admin")]
         [HttpGet("folders/{folderId}/files")]
         public async Task<ActionResult> GetFilesInFolder(string folderId)
         {
