@@ -32,10 +32,16 @@ namespace CopyRight.WebApi.Controllers
                 {
                     if (_BlProject.IsCorrectDates(newProject.StartDate, newProject.EndDate))
                     {
-                        if(await _BlProject.CreateAsync(newProject)!=null)
-                        
-                            return StatusCode(200, _BlProject.CreateAsync(newProject));
-                        return BadRequest("add faild");
+                        try
+                        {
+                            _BlProject.CreateAsync(newProject);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new Exception(ex.Message);
+
+                        }
+                        return StatusCode(200, $"the project added succeful");
                     }
                     else
                         return StatusCode(400, $"the startDate is  after the endDate");
