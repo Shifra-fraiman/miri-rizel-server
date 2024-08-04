@@ -19,6 +19,8 @@ namespace CopyRight.Dal.Service
         {
             try
             {
+          
+                item.IsActive=true;
                 await db.Projects.AddAsync(item);
                 await db.SaveChangesAsync();
                 return item;
@@ -28,6 +30,7 @@ namespace CopyRight.Dal.Service
                 throw new Exception(ex.Message);
             }
         }
+     
         public async Task<bool> DeleteAsync(int i)
         {
             try
