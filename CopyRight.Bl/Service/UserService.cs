@@ -38,7 +38,7 @@ namespace CopyRight.Bl.Service
                     throw new Exception("Email must be unique. This email is already in the system") { Data = { ["StatusCode"] = 409 } };
                 //check that the role id exist in the system
                 List<Dal.Models.RoleCode> roles = await dalManager.users.ReadAllRoleAsync();
-                var roleIs= roles.FirstOrDefault(role => role.Id == item.Role.Id);
+                var roleIs = roles.FirstOrDefault(role => role.Id == item.Role.Id);
                 if (roleIs == null) throw new Exception("The role is not exist in the system");
                 //signUp the user
                 item.UserId = 0;
@@ -101,7 +101,7 @@ namespace CopyRight.Bl.Service
                     return await dalManager.users.DeleteAsync(u.UserId);
                 else
                     return false;
-                    
+
             }
             catch (Exception ex)
             {
@@ -119,7 +119,7 @@ namespace CopyRight.Bl.Service
                     return await dalManager.users.DeleteAsync(u.UserId);
                 else
                     return false;
-               }
+            }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
@@ -172,8 +172,10 @@ namespace CopyRight.Bl.Service
             password = BCrypt.Net.BCrypt.HashPassword(password);
             return await dalManager.users.UpdatePassword(email, password);
         }
+
         public async Task<bool> SendResetEmail(string email, string tempPassword)
         {
+            // יצירת חיבור לשרת SMTP
             string smtpHost = "smtp.gmail.com";
             int smtpPort = 587;
             string smtpUsername = "systemcopyright1@gmail.com";
@@ -181,10 +183,10 @@ namespace CopyRight.Bl.Service
             bool enableSsl = true;
 
             // קבלת הנתיב הנוכחי של הקובץ UserService.cs
-            string currentFolder = Directory.GetCurrentDirectory();
+            //string currentFolder = Directory.GetCurrentDirectory();
             // בניית נתיב לתיקייה בה נמצאת התמונה
-            string logoPath = Path.Combine(currentFolder, "..", "logo.jpeg");
-            logoPath = Path.GetFullPath(logoPath); // הופך את הנתיב לנתיב מוחלט
+            //string logoPath = Path.Combine(currentFolder, "..", "logo.jpeg");
+            //logoPath = Path.GetFullPath(logoPath); // הופך את הנתיב לנתיב מוחלט
 
             using (var client = new SmtpClient(smtpHost, smtpPort))
             {
@@ -196,6 +198,8 @@ namespace CopyRight.Bl.Service
                 message.From = new MailAddress(smtpUsername, "CopyRight-noreply");
                 message.To.Add(email);
                 message.Subject = "בקשתך לאיפוס סיסמה";
+                message.Body = $"!נרשם בהצלחה ";
+                
                 message.IsBodyHtml = true; // הגדרת גוף המייל כ-HTML
 
                 string contactDetails = $@"{smtpUsername} :צור קשר ";
@@ -242,7 +246,6 @@ namespace CopyRight.Bl.Service
         <body>
             <div class='container'>
                 <div class='email-container'>
-                 <img class='logo' src='cid:logo' alt='Logo'>
                   <h2>בקשתך לאיפוס סיסמה</h2>
                   <p>:קוד האימות שלך הוא</p>
                   <div class='verification-code'>{tempPassword}</div>
@@ -253,16 +256,15 @@ namespace CopyRight.Bl.Service
         </html>";
 
                 message.Body = body;
-
+                /*
                 // צירוף הלוגו למייל
                 var logo = new LinkedResource(logoPath, MediaTypeNames.Image.Jpeg)
                 {
                     ContentId = "logo"
-                };
+                };*/
                 var htmlView = AlternateView.CreateAlternateViewFromString(body, null, MediaTypeNames.Text.Html);
-                htmlView.LinkedResources.Add(logo);
+                //htmlView.LinkedResources.Add(logo);
                 message.AlternateViews.Add(htmlView);
-
                 try
                 {
                     await client.SendMailAsync(message);
@@ -328,11 +330,9 @@ namespace CopyRight.Bl.Service
                     return false;
 
                 }
-
             }
         }
 
     }
 }
 
-   
