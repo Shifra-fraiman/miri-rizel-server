@@ -38,20 +38,17 @@ public partial class CopyRightContext : DbContext
     public virtual DbSet<Task> Tasks { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         //PGPASSWORD=RvXri1TomeRGZIq4MsJVzrmPrNGQvGj0 psql -h dpg-cqkalq2ju9rs738jmrag-a.singapore-postgres.render.com -U copyrightdb_user copyrightdb
         optionsBuilder.UseNpgsql("Host=dpg-cqlndt08fa8c73b73c3g-a.singapore-postgres.render.com;Port=5432;Database=copyrightdb_ue70;Username=miri_rizel;Password=M1HONrwZnY85hnyBMraOFUomYoWzBDNz;");
     }
-    //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-    //        => optionsBuilder.UseSqlServer("Data Source= DESKTOP-E0FAPSB\\SQLEXPRESS;Initial Catalog=CopyRight; Trusted_Connection=True;MultipleActiveResultSets=True;Encrypt=False");
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Communication>(entity =>
         {
-            entity.HasKey(e => e.CommunicationId).HasName("PK__Communic__C6D53E4CA417F910");
+            entity.HasKey(e => e.CommunicationId).HasName("PK__Communic__C6D53E4C30899916");
 
             entity.Property(e => e.CommunicationId).HasColumnName("communication_id");
             entity.Property(e => e.Date)
@@ -76,7 +73,7 @@ public partial class CopyRightContext : DbContext
 
         modelBuilder.Entity<Customer>(entity =>
         {
-            entity.HasKey(e => e.CustomerId).HasName("PK__Customer__CD65CB850F8F292D");
+            entity.HasKey(e => e.CustomerId).HasName("PK__Customer__CD65CB855B61DD55");
 
             entity.Property(e => e.CustomerId).HasColumnName("customer_id");
             entity.Property(e => e.BusinessName)
@@ -116,7 +113,7 @@ public partial class CopyRightContext : DbContext
 
         modelBuilder.Entity<Document>(entity =>
         {
-            entity.HasKey(e => e.DocumentId).HasName("PK__Document__9666E8AC686E8FC7");
+            entity.HasKey(e => e.DocumentId).HasName("PK__Document__9666E8AC43845CA0");
 
             entity.Property(e => e.DocumentId).HasColumnName("document_id");
             entity.Property(e => e.CreatedDate)
@@ -143,7 +140,7 @@ public partial class CopyRightContext : DbContext
 
         modelBuilder.Entity<Lead>(entity =>
         {
-            entity.HasKey(e => e.LeadId).HasName("PK__Leads__B54D340BF847E999");
+            entity.HasKey(e => e.LeadId).HasName("PK__Leads__B54D340BA1C59A41");
 
             entity.Property(e => e.LeadId).HasColumnName("lead_id");
             entity.Property(e => e.BusinessName)
@@ -184,7 +181,7 @@ public partial class CopyRightContext : DbContext
 
         modelBuilder.Entity<PriorityCode>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Priority__3214EC071FCD575A");
+            entity.HasKey(e => e.Id).HasName("PK__Priority__3214EC07BD2AD1BE");
 
             entity.ToTable("PriorityCode");
 
@@ -195,9 +192,10 @@ public partial class CopyRightContext : DbContext
 
         modelBuilder.Entity<Project>(entity =>
         {
-            entity.HasKey(e => e.ProjectId).HasName("PK__Projects__BC799E1F50222B31");
+            entity.HasKey(e => e.ProjectId).HasName("PK__Projects__BC799E1FC93025AE");
 
             entity.Property(e => e.ProjectId).HasColumnName("project_id");
+            entity.Property(e => e.Authorize).HasColumnName("authorize");
             entity.Property(e => e.CreatedDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
@@ -219,6 +217,10 @@ public partial class CopyRightContext : DbContext
                 .HasColumnName("start_date");
             entity.Property(e => e.Status).HasColumnName("status");
 
+            entity.HasOne(d => d.AuthorizeNavigation).WithMany(p => p.Projects)
+                .HasForeignKey(d => d.Authorize)
+                .HasConstraintName("FK__Projects__author__534D60F1");
+
             entity.HasOne(d => d.Customer).WithMany(p => p.Projects)
                 .HasForeignKey(d => d.CustomerId)
                 .HasConstraintName("FK__Projects__custom__5165187F");
@@ -230,7 +232,7 @@ public partial class CopyRightContext : DbContext
 
         modelBuilder.Entity<RelatedToCode>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__relatedT__3214EC07951C0B3C");
+            entity.HasKey(e => e.Id).HasName("PK__relatedT__3214EC07231817C5");
 
             entity.ToTable("relatedToCode");
 
@@ -241,7 +243,7 @@ public partial class CopyRightContext : DbContext
 
         modelBuilder.Entity<RoleCode>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__RoleCode__3214EC07255A4266");
+            entity.HasKey(e => e.Id).HasName("PK__RoleCode__3214EC07744C57FB");
 
             entity.ToTable("RoleCode");
 
@@ -252,7 +254,7 @@ public partial class CopyRightContext : DbContext
 
         modelBuilder.Entity<StatusCodeProject>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__StatusCo__3214EC079DBE9762");
+            entity.HasKey(e => e.Id).HasName("PK__StatusCo__3214EC07B3534E75");
 
             entity.ToTable("StatusCodeProject");
 
@@ -263,7 +265,7 @@ public partial class CopyRightContext : DbContext
 
         modelBuilder.Entity<StatusCodeUser>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__StatusCo__3214EC07A82ABE7B");
+            entity.HasKey(e => e.Id).HasName("PK__StatusCo__3214EC071489E0C0");
 
             entity.ToTable("StatusCodeUser");
 
@@ -274,7 +276,7 @@ public partial class CopyRightContext : DbContext
 
         modelBuilder.Entity<Task>(entity =>
         {
-            entity.HasKey(e => e.TaskId).HasName("PK__Tasks__0492148DF823C59C");
+            entity.HasKey(e => e.TaskId).HasName("PK__Tasks__0492148D33263DA6");
 
             entity.Property(e => e.TaskId).HasColumnName("task_id");
             entity.Property(e => e.AssignedTo).HasColumnName("assigned_to");
@@ -302,27 +304,27 @@ public partial class CopyRightContext : DbContext
 
             entity.HasOne(d => d.AssignedToNavigation).WithMany(p => p.Tasks)
                 .HasForeignKey(d => d.AssignedTo)
-                .HasConstraintName("FK__Tasks__assigned___5629CD9C");
+                .HasConstraintName("FK__Tasks__assigned___571DF1D5");
 
             entity.HasOne(d => d.PriorityNavigation).WithMany(p => p.Tasks)
                 .HasForeignKey(d => d.Priority)
-                .HasConstraintName("FK__Tasks__priority__5812160E");
+                .HasConstraintName("FK__Tasks__priority__59063A47");
 
             entity.HasOne(d => d.Project).WithMany(p => p.Tasks)
                 .HasForeignKey(d => d.ProjectId)
-                .HasConstraintName("FK__Tasks__project_i__571DF1D5");
+                .HasConstraintName("FK__Tasks__project_i__5812160E");
 
             entity.HasOne(d => d.StatusNavigation).WithMany(p => p.Tasks)
                 .HasForeignKey(d => d.Status)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Tasks__status__59063A47");
+                .HasConstraintName("FK__Tasks__status__59FA5E80");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__B9BE370FF946FB13");
+            entity.HasKey(e => e.UserId).HasName("PK__Users__B9BE370F50B249D1");
 
-            entity.HasIndex(e => e.Email, "UQ__Users__AB6E61645CEA1694").IsUnique();
+            entity.HasIndex(e => e.Email, "UQ__Users__AB6E61646729F91C").IsUnique();
 
             entity.Property(e => e.UserId).HasColumnName("user_id");
             entity.Property(e => e.CreatedDate)

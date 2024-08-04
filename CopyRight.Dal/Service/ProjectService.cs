@@ -44,7 +44,7 @@ namespace CopyRight.Dal.Service
         }
         public async Task<List<Project>> ReadAsync(Predicate<Project> filter)
         {
-            List<Project> projects = await db.Projects.ToListAsync();
+            List<Project> projects = await ReadAllAsync();
 
             return projects.FindAll(p => filter(p));
         }
@@ -54,8 +54,8 @@ namespace CopyRight.Dal.Service
             try
             {
                 return await db.Projects
-                             .Include(t => t.Customer).Include(p=>p.Customer.StatusNavigation)
-                             .Include(t => t.StatusNavigation)
+                             .Include(t => t.Customer).Include(p => p.Customer.StatusNavigation)
+                             .Include(t => t.StatusNavigation).Include(o=>o.AuthorizeNavigation)
                              .ToListAsync();
             }
             catch (DbUpdateException ex)
@@ -63,6 +63,54 @@ namespace CopyRight.Dal.Service
                 throw new ApplicationException("An error occurred while saving data to the database. Please try again later.", ex);
             }
         }
+        public async Task<List<Project>> ReadProjectAsync()
+        {
+            try
+            {
+
+                return await db.Projects
+                            .Include(t => t.Customer).Include(p => p.Customer.StatusNavigation)
+                            .Include(t => t.StatusNavigation).Include(o => o.Authorize)
+                            .Where(x => x.IsActive == true && x.Authorize == 1).ToListAsync();
+
+            }
+          
+            catch (DbUpdateException ex)
+            {
+                throw new ApplicationException("An error occurred while take data to the database. Please try again later.", ex);
+            }
+        }
+        public async Task<bool> ReadTaskAuthAsync(int id)
+        {
+            try
+            {
+                Project item = await db.Projects.Include(t => t.Customer).Include(t => t.Status).FirstOrDefaultAsync(t => t.ProjectId == id && t.Authorize == 1);
+
+
+                if (item != null)
+                {
+                    return true;
+
+                }
+                else if (item == null)
+                {
+
+
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                {
+
+                    throw new Exception(ex.Message);
+                }
+
+            }
+            return false;
+        }
+
+
         public async Task<bool> UpdateAsync(Project item)
         {
             try

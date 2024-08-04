@@ -14,6 +14,8 @@ namespace CopyRight.Dal.Interfaces
         Task<List<PriorityCode>> ReadAllPriorityAsync();
         Task<List<StatusCodeProject>> ReadAllStatusAsync();
         Task<bool> UpdateGoogleCalendarAsync(int taskId, string googleId);
+        Task<List<Task>> ReadTaskAsync();
+        Task<bool> ReadTaskAuthAsync(int id);
 
     }
 }

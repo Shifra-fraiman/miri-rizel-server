@@ -11,5 +11,8 @@ namespace CopyRight.Dal.Interfaces
     public interface IProject :IDalCrud<Project>
     {
         Task<Project> GetByIdAsync(int id);
+        Task<bool> ReadTaskAuthAsync(int id);
+        Task<List<Project>> ReadProjectAsync();
+      
     }
 }

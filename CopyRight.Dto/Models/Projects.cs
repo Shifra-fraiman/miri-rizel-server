@@ -18,6 +18,8 @@ namespace CopyRight.Dto.Models
 
         public DateTime? EndDate { get; set; }
 
+        public int? Authorize { get; set; }
+
         public StatusCodeProject? Status { get; set; }
 
         public Customers? Customer { get; set; }
