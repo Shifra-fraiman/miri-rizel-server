@@ -21,8 +21,8 @@ namespace CopyRight.WebApi.Controllers
         }
 
 
-        [Authorize(Policy = "Admin")]
         [HttpPost("upload")]
+        [Authorize(Policy="Admin")]
         public async Task<string> UploadFile(IFormFile file,[FromQuery] string nameFolder)
         {
             if (file == null || file.Length == 0)
@@ -48,11 +48,12 @@ namespace CopyRight.WebApi.Controllers
                 }
             }
         }
-        [Authorize(Policy = "Admin")]
         [HttpGet("folders")]
+        [Authorize(Policy="Admin")]
+
         public async Task<ActionResult> GetFolders()
         {
-            string parentFolderId = "165l3OCzzhcYUrg3-P4uj0EvXg8iTFEvv";
+            string parentFolderId = "1h99QmpROSgDnlrUckbAWnhWzskCMXUxQ";
             try
             {
                 var folders = await _googleDriveService.GetFolderInParentFolderAsync(parentFolderId);

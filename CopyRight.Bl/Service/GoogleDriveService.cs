@@ -16,6 +16,7 @@ namespace CopyRight.Bl.Service
 
         public GoogleDriveService()
         {
+
             var credential = GoogleCredential.FromFile("Resources/credentials.json")
                 .CreateScoped(Scopes);
 
@@ -102,7 +103,7 @@ namespace CopyRight.Bl.Service
 
         public async Task<string> GetOrCreateUserFolderAsync(string userName)
         {
-            string parentFolderId = "165l3OCzzhcYUrg3-P4uj0EvXg8iTFEvv";
+            string parentFolderId = "1h99QmpROSgDnlrUckbAWnhWzskCMXUxQ";
             var request = _driveService.Files.List();
             request.Q = $"mimeType='application/vnd.google-apps.folder' and '{parentFolderId}' in parents and name='{userName}'";
             request.Fields = "files(id, name)";
@@ -120,7 +121,7 @@ namespace CopyRight.Bl.Service
         public async Task<string> UploadUserFileAsync(Stream fileStream, string fileName, string mimeType, string userName)
             
         {
-            string parentFolderId = "165l3OCzzhcYUrg3-P4uj0EvXg8iTFEvv";
+            string parentFolderId = "1h99QmpROSgDnlrUckbAWnhWzskCMXUxQ";
 
             var userFolderId = await GetOrCreateUserFolderAsync(userName);
 
