@@ -37,6 +37,26 @@ namespace CopyRight.Bl.Service
             newCustomer.CreatedDate = DateTime.UtcNow;
             return mapper.Map<Dto.Models.Projects>(await _dalManager.project.CreateAsync(newCustomer));
         }
+        public async Task<bool> ReadTaskAuthAsync(int id)
+        {
+
+
+            try
+            {
+                List<Dal.Models.Project> u = await proj.ReadAsync(o => o.ProjectId == id && o.Authorize == 1);
+                Console.WriteLine(u);
+                if (u.Count > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+
+        }
 
         public async Task<bool> DeleteAsync(int id)
         {
@@ -57,14 +77,14 @@ namespace CopyRight.Bl.Service
 
         public async Task<List<Projects>> ReadAsync(Predicate<Projects> filter)
         {
-            List<Projects> u = await ReadAllAsync();
+            List< Dto.Models.Projects> u = await ReadAllAsync();
             return u.ToList().FindAll(o => filter(o));
         }
-
-
+     
         public async Task<List<Projects>> ReadAllAsync() => 
 mapper.Map<List<Dal.Models.Project>, List<Projects>>(await _dalManager.project.ReadAllAsync());
-
+        public async Task<List<Projects>> ReadProjectAsync() =>
+mapper.Map<List<Dal.Models.Project>, List<Projects>>(await _dalManager.project.ReadAsync(o => o.Authorize == 1));
         public async Task<bool> UpdateAsync(Projects item) => await proj.UpdateAsync(mapper.Map<Projects, Dal.Models.Project>(item));
 
        
