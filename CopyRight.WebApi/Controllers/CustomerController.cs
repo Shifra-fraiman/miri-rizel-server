@@ -11,11 +11,9 @@ namespace CopyRight.WebApi.Controllers
     public class CustomerController : ControllerBase
     {
         public ICustomer _customerService { get; set; }
-        private readonly GoogleDriveService googleDriveService;
 
-        public CustomerController(ICustomer customerService, GoogleDriveService googleDriveService)
+        public CustomerController(ICustomer customerService)
         {
-            this.googleDriveService = googleDriveService;
             this._customerService = customerService;
         }
         [Authorize(Policy = "Worker")]
@@ -59,7 +57,6 @@ namespace CopyRight.WebApi.Controllers
                 Customers customer = await _customerService.CreateAsync(newCustomer);
                 string fullName=newCustomer.FirstName+" "+customer.LastName;
 
-                googleDriveService.GetOrCreateUserFolderAsync(fullName);
 
                 return Ok(customer);
             }
