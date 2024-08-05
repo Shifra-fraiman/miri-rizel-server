@@ -10,6 +10,9 @@
     <Content Remove="Resources\credentials.json" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\credentials.json" />
+  </ItemGroup>
+  <ItemGroup>
     <None Update="Resources\credentials.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
