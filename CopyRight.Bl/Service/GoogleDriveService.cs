@@ -119,13 +119,13 @@ namespace CopyRight.Bl.Service
             }
         }
         public async Task<string> UploadUserFileAsync(Stream fileStream, string fileName, string mimeType, string userName)
-            
+
         {
             string parentFolderId = "1h99QmpROSgDnlrUckbAWnhWzskCMXUxQ";
 
             var userFolderId = await GetOrCreateUserFolderAsync(userName);
 
-          string idFolder=  await UploadFileAsync(fileStream, fileName, mimeType, userFolderId);
+            string idFolder = await UploadFileAsync(fileStream, fileName, mimeType, userFolderId);
             return idFolder;
         }
 
