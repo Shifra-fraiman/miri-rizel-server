@@ -10,9 +10,7 @@
     <Content Remove="Resources\credentials.json" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="Resources\credentials.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="Resources\credentials.json" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
@@ -32,9 +30,11 @@
     <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\CopyRight.Bl\CopyRight.Bl.csproj" />
     <ProjectReference Include="..\CopyRight.Dal\CopyRight.Dal.csproj" />
     <ProjectReference Include="..\CopyRight.Dto\CopyRight.Dto.csproj" />
   </ItemGroup>
+
 </Project>
