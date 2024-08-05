@@ -14,11 +14,9 @@ namespace CopyRight.WebApi.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUser _userService;
-        private readonly GoogleDriveService googleDriveService;
-        public UserController(IUser userService, GoogleDriveService googleDriveService)
+        public UserController(IUser userService)
         {
             _userService = userService;
-            this.googleDriveService = googleDriveService;
         }
         [HttpGet("Login")]
         public async Task<ActionResult<User>> Login([FromQuery(Name = "email")] string email, [FromQuery(Name = "password")] string password)
@@ -109,7 +107,6 @@ namespace CopyRight.WebApi.Controllers
             try
             {
                 User createdUser = await _userService.CreateAsync(user);
-                googleDriveService.GetOrCreateUserFolderAsync(user.FirstName);
                 var claims = new List<Claim>();
                 claims = new List<Claim>
                     {
