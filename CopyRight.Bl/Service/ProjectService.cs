@@ -21,7 +21,6 @@ namespace CopyRight.Bl.Service
         readonly IMapper mapper;
         public ProjectService(DalManager dal, Dal.Interfaces.IProject p)
         {
-
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<CopyRightDProfile>();
@@ -32,6 +31,8 @@ namespace CopyRight.Bl.Service
         }
         public async Task<Projects> CreateAsync(Projects item)
         {
+            Project p = new() { CreatedDate = DateTime.Now, ProjectId = item.ProjectId, Name = item.Name, Description = item.Description, StartDate = item.StartDate, EndDate = item.EndDate, Status = item.Status.Id, CustomerId = item.Customer.CustomerId ,IsActive=true};
+            return mapper.Map<Dto.Models.Projects>(await proj.CreateAsync(mapper.Map<Dal.Models.Project>(p)));
 
             var newCustomer = mapper.Map<Dal.Models.Project>(item);
             newCustomer.CreatedDate = DateTime.UtcNow;
@@ -57,11 +58,8 @@ namespace CopyRight.Bl.Service
             }
 
         }
-
         public async Task<bool> DeleteAsync(int id)
         {
-
-
             try
             {
                 List<Dal.Models.Project> u = await proj.ReadAsync(o => o.ProjectId == id);
@@ -72,9 +70,7 @@ namespace CopyRight.Bl.Service
             {
                 return false;
             }
-
         }
-
         public async Task<List<Projects>> ReadAsync(Predicate<Projects> filter)
         {
             List< Dto.Models.Projects> u = await ReadAllAsync();
@@ -88,13 +84,7 @@ mapper.Map<List<Dal.Models.Project>, List<Projects>>(await _dalManager.project.R
         public async Task<bool> UpdateAsync(Projects item) => await proj.UpdateAsync(mapper.Map<Projects, Dal.Models.Project>(item));
 
        
-        public bool IsOnlyLetters(string input)
-        {
-
-            Regex regex = new Regex(@"^[a-zA-Zא-ת]+$");
-
-            return regex.IsMatch(input);
-        }
+       
         public async Task<bool> IsOnTheDB(int? id)
         {
             List<Customer> m = await _dalManager.customers.ReadAsync(o => o.CustomerId == id);
