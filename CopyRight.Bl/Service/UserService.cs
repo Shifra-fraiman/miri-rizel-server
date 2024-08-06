@@ -178,8 +178,10 @@ namespace CopyRight.Bl.Service
             // יצירת חיבור לשרת SMTP
             string smtpHost = "smtp.gmail.com";
             int smtpPort = 587;
-            string smtpUsername = "systemcopyright1@gmail.com";
-            string smtpPassword = "sziq eykg egpi imcb";
+            //string smtpUsername = "systemcopyright1@gmail.com";
+            //string smtpPassword = "sziq eykg egpi imcb";
+            string smtpUsername = "simcha993451@gmail.com";
+            string smtpPassword = "wwdt ahbt lgum bbvt";
             bool enableSsl = true;
 
             // קבלת הנתיב הנוכחי של הקובץ UserService.cs
