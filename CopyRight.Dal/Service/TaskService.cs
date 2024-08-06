@@ -30,6 +30,51 @@ namespace CopyRight.Dal.Service
                 throw new Exception(ex.Message);
             }
         }
+        public async Task<List<Models.Task>> ReadTaskAsync()
+        {
+            try
+            {
+
+                List<Models.Task> l = await db.Tasks.Where(t => t.Project.Authorize == 1).Include(t => t.AssignedToNavigation).Include(t=>t.Project.Authorize)
+                               .Include(t => t.Project)
+                               .Include(t => t.PriorityNavigation).ToListAsync();
+                if (l.Count > 0)
+                {
+                    return l;
+                }
+                return l;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("error-", ex);
+            }
+        }
+        public async Task<bool> ReadTaskAuthAsync(int id)
+        {
+            {
+                try
+                {
+                    List<Models.Task> item = await ReadAsync(o => o.TaskId == id && o.Project.Authorize == 1);
+                    if (item.Count > 0)
+                    {
+                        return true;
+                    }
+
+                    return false;
+                }
+                catch (DbUpdateException ex)
+                {
+                    throw new ApplicationException("An error occurred while saving data to the database. Please try again later.", ex);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("error-", ex);
+                }
+              
+            }
+        }
+
 
         public async Task<bool> DeleteAsync(int i)
         {
@@ -49,18 +94,25 @@ namespace CopyRight.Dal.Service
 
         public async Task<List<CopyRight.Dal.Models.Task>> ReadAsync(Predicate<CopyRight.Dal.Models.Task> filter)
         {
-            try
-            {
-                List<CopyRight.Dal.Models.Task> l = await db.Tasks.ToListAsync();
-                
-                return l.FindAll(p => filter(p));
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+           
+                try
+                {
+                    List<Models.Task> l = await db.Tasks
+                                   .Include(t => t.AssignedToNavigation)
+                                   .Include(t => t.Project)
+                                   .Include(t => t.StatusNavigation)
+                                   .Include(t => t.PriorityNavigation)
+                                   .ToListAsync();
 
+                    return l.FindAll(p => filter(p));
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
 
+               
+            
         }
 
         public async Task<List<CopyRight.Dal.Models.Task>> ReadAllAsync()

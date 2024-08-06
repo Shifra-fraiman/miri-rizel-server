@@ -45,7 +45,7 @@ namespace CopyRight.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message, ex);                 
+                throw new Exception(ex.Message, ex);
             }
 
 
@@ -57,7 +57,7 @@ namespace CopyRight.WebApi.Controllers
             try
             {
                 Customers customer = await _customerService.CreateAsync(newCustomer);
-                string fullName=newCustomer.FirstName+" "+customer.LastName;
+                string fullName = newCustomer.FirstName + " " + customer.LastName;
 
                 googleDriveService.GetOrCreateUserFolderAsync(fullName);
 
@@ -65,7 +65,7 @@ namespace CopyRight.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception (ex.Message, ex);                 
+                throw new Exception(ex.Message, ex);
             }
         }
         [Authorize(Policy = "Worker")]
@@ -109,15 +109,15 @@ namespace CopyRight.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message  , ex);
-                    
+                throw new Exception(ex.Message, ex);
+
             }
 
 
         } 
         [Authorize(Policy = "Worker")]
         [HttpGet("GetAllStatus")]
-       public async Task<List<StatusCodeUser>> getAllStatusCodeUser()
+        public async Task<List<StatusCodeUser>> getAllStatusCodeUser()
         {
             try
             {
@@ -128,5 +128,5 @@ namespace CopyRight.WebApi.Controllers
                 return null;
             }
         }
-        }
+    }
 }

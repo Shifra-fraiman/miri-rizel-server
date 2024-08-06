@@ -177,10 +177,11 @@ namespace CopyRight.Bl.Service
             string smtpPassword = "sziq eykg egpi imcb";
             bool enableSsl = true;
             // קבלת הנתיב הנוכחי של הקובץ UserService.cs
-            string currentFolder = Directory.GetCurrentDirectory();
+           // string currentFolder = Directory.GetCurrentDirectory();
             // בניית נתיב לתיקייה בה נמצאת התמונה
-            string logoPath = Path.Combine(currentFolder, "..", "logo.jpeg");
-            logoPath = Path.GetFullPath(logoPath); // הופך את הנתיב לנתיב מוחלט
+           // string logoPath = Path.Combine(currentFolder, "..", "logo.jpeg");
+           // logoPath = Path.GetFullPath(logoPath); // הופך את הנתיב לנתיב מוחלט
+
             using (var client = new SmtpClient(smtpHost, smtpPort))
             {
                 client.UseDefaultCredentials = false;
@@ -237,7 +238,6 @@ namespace CopyRight.Bl.Service
         <body>
             <div class='container'>
                 <div class='email-container'>
-                 <img class='logo' src='cid:logo' alt='Logo'>
                   <h2>בקשתך לאיפוס סיסמה</h2>
                   <p>:קוד האימות שלך הוא</p>
                   <div class='verification-code'>{tempPassword}</div>
@@ -249,12 +249,12 @@ namespace CopyRight.Bl.Service
                 message.Body = body;
 
                 // צירוף הלוגו למייל
-                var logo = new LinkedResource(logoPath, MediaTypeNames.Image.Jpeg)
-                {
-                    ContentId = "logo"
-                };
+                //var logo = new LinkedResource(logoPath, MediaTypeNames.Image.Jpeg)
+                //{
+                 //   ContentId = "logo"
+                //};
                 var htmlView = AlternateView.CreateAlternateViewFromString(body, null, MediaTypeNames.Text.Html);
-                htmlView.LinkedResources.Add(logo);
+                //htmlView.LinkedResources.Add(logo);
                 message.AlternateViews.Add(htmlView);
                 try
                 {

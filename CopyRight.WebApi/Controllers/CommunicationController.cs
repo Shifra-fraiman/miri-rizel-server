@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using CopyRight.Dal.Models;
 using CopyRight.Bl;
 using CopyRight.Dal.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CopyRight.WebApi.Controllers
 {
@@ -26,6 +27,8 @@ namespace CopyRight.WebApi.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "Admin")]
+
         public async Task<ActionResult<List<Communications>>> ReadAll()
         {
             try
@@ -41,6 +44,8 @@ namespace CopyRight.WebApi.Controllers
         }
 
         [HttpGet("GetById")]
+        [Authorize(Policy = "Admin")]
+
         public async Task<ActionResult<Communications>> GetByIdAsync([FromQuery(Name = "id")] int id)
         {
             try
@@ -59,6 +64,8 @@ namespace CopyRight.WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "Admin")]
+
         public async Task<ActionResult<Communications>> CreateAsync([FromBody] Communications c)
         {
             try
@@ -75,6 +82,8 @@ namespace CopyRight.WebApi.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Policy = "Admin")]
+
         public async Task<ActionResult<bool>> DeleteAsync([FromQuery(Name = "id")] int id)
         {
             try
