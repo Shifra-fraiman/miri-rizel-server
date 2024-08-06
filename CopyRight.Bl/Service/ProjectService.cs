@@ -84,13 +84,7 @@ mapper.Map<List<Dal.Models.Project>, List<Projects>>(await _dalManager.project.R
         public async Task<bool> UpdateAsync(Projects item) => await proj.UpdateAsync(mapper.Map<Projects, Dal.Models.Project>(item));
 
        
-        public bool IsOnlyLetters(string input)
-        {
-
-            Regex regex = new Regex(@"^[a-zA-Zא-ת]+$");
-
-            return regex.IsMatch(input);
-        }
+       
         public async Task<bool> IsOnTheDB(int? id)
         {
             List<Customer> m = await _dalManager.customers.ReadAsync(o => o.CustomerId == id);

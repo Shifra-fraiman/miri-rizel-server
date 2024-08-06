@@ -30,8 +30,7 @@ namespace CopyRight.WebApi.Controllers
 
             if (await _BlProject.IsOnTheDB(newProject.Customer.CustomerId))
             {
-                if (_BlProject.IsOnlyLetters(newProject.Name))
-                {
+              
                     if (_BlProject.IsCorrectDates(newProject.StartDate, newProject.EndDate))
                     {
                         try
@@ -48,9 +47,7 @@ namespace CopyRight.WebApi.Controllers
                     }
                     else
                         return StatusCode(400, $"the startDate is  after the endDate");
-                }
-                else
-                    return StatusCode(400, $"the name isnt valid");
+
             }
             else
                 return StatusCode(400, $"This customer not exist on db");
@@ -106,7 +103,7 @@ namespace CopyRight.WebApi.Controllers
                     if (typeClaim == "Admin")
                     {
 
-                        List<Projects> projects = await _BlProject.ReadAllAsync();
+                        List<Projects> projects = await _BlProject.ReadAsync(o=>o.IsActive==true);
                         return Ok(projects);
 
                     }
@@ -182,13 +179,7 @@ namespace CopyRight.WebApi.Controllers
 
 
             return Ok("ok");
-
-
         }
-
-
-
-
 
         [Authorize(Policy = "Worker")]
         [Route("getById")]
