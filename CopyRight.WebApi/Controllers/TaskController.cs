@@ -203,10 +203,10 @@ namespace CopyRight.WebApi.Controllers
             }
         }
 
-        [Authorize(Policy = "Worker")]
+       [Authorize(Policy = "Worker")]
         [HttpPut]
         [Route("googleCalendar")]
-        public async Task<bool> UpdateGoogleCalendarAsync(int taskId, string googleId)
+        public async Task<bool> UpdateGoogleCalendarAsync([FromQuery(Name = "taskId")] int taskId, [FromQuery(Name = "googleId")] string googleId)
         {
             return await _taskService.UpdateGoogleCalendarAsync(taskId, googleId);
         }
