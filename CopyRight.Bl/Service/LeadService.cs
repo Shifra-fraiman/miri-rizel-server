@@ -68,7 +68,7 @@ namespace CopyRight.Bl.Service
         {
             try
             {
-                dalManager.leads.DeleteAsync(item.LeadId);
+                await dalManager.leads.DeleteAsync(item.LeadId);
                 List<Dal.Models.StatusCodeUser> statuses =await dalManager.statusU.ReadAllAsync();
                 Dal.Models.StatusCodeUser status= null;
                 foreach (var s in statuses)
