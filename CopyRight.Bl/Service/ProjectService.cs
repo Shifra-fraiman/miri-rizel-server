@@ -21,7 +21,6 @@ namespace CopyRight.Bl.Service
         readonly IMapper mapper;
         public ProjectService(DalManager dal, Dal.Interfaces.IProject p)
         {
-
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<CopyRightDProfile>();
@@ -34,13 +33,9 @@ namespace CopyRight.Bl.Service
         {
             Project p = new() { CreatedDate = DateTime.Now, ProjectId = item.ProjectId, Name = item.Name, Description = item.Description, StartDate = item.StartDate, EndDate = item.EndDate, Status = item.Status.Id, CustomerId = item.Customer.CustomerId ,IsActive=true};
             return mapper.Map<Dto.Models.Projects>(await proj.CreateAsync(mapper.Map<Dal.Models.Project>(p)));
-
         }
-
         public async Task<bool> DeleteAsync(int id)
         {
-
-
             try
             {
                 List<Dal.Models.Project> u = await proj.ReadAsync(o => o.ProjectId == id);
@@ -51,9 +46,7 @@ namespace CopyRight.Bl.Service
             {
                 return false;
             }
-
         }
-
         public async Task<List<Projects>> ReadAsync(Predicate<Projects> filter)
         {
             List<Projects> u = await ReadAllAsync();

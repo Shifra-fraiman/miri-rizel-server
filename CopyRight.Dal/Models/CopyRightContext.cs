@@ -41,7 +41,7 @@ public partial class CopyRightContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         //PGPASSWORD=RvXri1TomeRGZIq4MsJVzrmPrNGQvGj0 psql -h dpg-cqkalq2ju9rs738jmrag-a.singapore-postgres.render.com -U copyrightdb_user copyrightdb
-        optionsBuilder.UseNpgsql("Host=dpg-cqkalq2ju9rs738jmrag-a.singapore-postgres.render.com;Port=5432;Database=copyrightdb;Username=copyrightdb_user;Password=RvXri1TomeRGZIq4MsJVzrmPrNGQvGj0;");
+        optionsBuilder.UseNpgsql("Host=dpg-cqlndt08fa8c73b73c3g-a.singapore-postgres.render.com;Port=5432;Database=copyrightdb_ue70;Username=miri_rizel;Password=M1HONrwZnY85hnyBMraOFUomYoWzBDNz;");
     }
     //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.

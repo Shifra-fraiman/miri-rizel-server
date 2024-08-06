@@ -64,7 +64,7 @@ namespace CopyRight.WebApi.Controllers
             List<Projects> p = await _BlProject.ReadAsync(o=>o.IsActive==true);
             return Ok(p);
         }
-        //[Authorize(Policy = "Admin")]
+        [Authorize(Policy = "Admin")]
         [Route("getUnActiveProject")]
         [HttpGet]
         public async Task<ActionResult<Projects[]>> GetAll()

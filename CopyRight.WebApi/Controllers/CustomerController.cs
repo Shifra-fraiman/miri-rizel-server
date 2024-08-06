@@ -114,7 +114,7 @@ namespace CopyRight.WebApi.Controllers
             }
 
 
-        }
+        } 
         [Authorize(Policy = "Worker")]
         [HttpGet("GetAllStatus")]
        public async Task<List<StatusCodeUser>> getAllStatusCodeUser()

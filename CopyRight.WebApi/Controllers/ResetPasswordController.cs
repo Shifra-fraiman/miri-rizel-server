@@ -30,6 +30,7 @@ namespace CopyRight.WebApi.Controllers
                 Dto.Models.User k = l.FirstOrDefault();
                 if (k != null)
                 {
+
                     string code = _BlUser.RandomaPassword();
                     if (await _BlUser.SendResetEmail(request.email, code))
                         return StatusCode(200, code);
