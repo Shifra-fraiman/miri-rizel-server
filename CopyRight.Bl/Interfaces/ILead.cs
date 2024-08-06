@@ -11,5 +11,6 @@ namespace CopyRight.Bl.Interfaces
     public interface ILead: IBlcrud<Leads>
     {
         Task<Leads> GetByIdAsync(int id);
+        Task<Customers> replaceToCustomer(Leads l);
     }
 }

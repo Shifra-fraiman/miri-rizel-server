@@ -63,5 +63,43 @@ namespace CopyRight.Bl.Service
                 throw new Exception(ex.Message, ex);
             }
         }
+
+        public async Task<Customers> replaceToCustomer(Leads item)
+        {
+            try
+            {
+                dalManager.leads.DeleteAsync(item.LeadId);
+                List<Dal.Models.StatusCodeUser> statuses =await dalManager.statusU.ReadAllAsync();
+                Dal.Models.StatusCodeUser status= null;
+                foreach (var s in statuses)
+                {
+                    if (s.Description == "Active")
+                        status = s;
+                }
+                if(status == null)
+                    status = new Dal.Models.StatusCodeUser();
+               
+                    Customers c = new Customers()
+                    {
+                        FirstName = item.FirstName,
+                        LastName = item.LastName,
+                        Source = item.Source,
+                        BusinessName = item.BusinessName,
+                        Phone = item.Phone,
+                        Email = item.Email,
+                        Status = mapper.Map<Dto.Models.StatusCodeUser>(status),
+                        CreatedDate = item.CreatedDate
+                    };
+                
+                
+
+                var newCustomer = mapper.Map<Dal.Models.Customer>(c);
+                return mapper.Map<Dto.Models.Customers>(await dalManager.customers.CreateAsync(newCustomer));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+        }
     }
 }
