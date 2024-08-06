@@ -13,6 +13,8 @@ namespace CopyRight.Bl.Interfaces
         Task<List<StatusCodeProject>> ReadAllStatusAsync();
         Task<List<PriorityCode>> ReadAllPriorityAsync();
         Task<bool> UpdateGoogleCalendarAsync(int taskId, string googleId);
+        Task<List<Tasks>> ReadTaskAsync();
+        Task<bool> ReadTaskAuthAsync(int id);
 
 
     }

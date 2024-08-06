@@ -20,9 +20,9 @@ namespace CopyRight.WebApi.Controllers
             _googleDriveService = googleDriveService;
         }
 
-       
-        //[Authorize(Policy = "Customer")]
+
         [HttpPost("upload")]
+        [Authorize(Policy="Admin")]
         public async Task<string> UploadFile(IFormFile file,[FromQuery] string nameFolder)
         {
             if (file == null || file.Length == 0)
@@ -48,11 +48,12 @@ namespace CopyRight.WebApi.Controllers
                 }
             }
         }
-        [Authorize(Policy = "Worker")]
         [HttpGet("folders")]
+        [Authorize(Policy="Admin")]
+
         public async Task<ActionResult> GetFolders()
         {
-            string parentFolderId = "165l3OCzzhcYUrg3-P4uj0EvXg8iTFEvv";
+            string parentFolderId = "1h99QmpROSgDnlrUckbAWnhWzskCMXUxQ";
             try
             {
                 var folders = await _googleDriveService.GetFolderInParentFolderAsync(parentFolderId);
@@ -65,7 +66,7 @@ namespace CopyRight.WebApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
-         [Authorize(Policy = "Worker")]
+        [Authorize(Policy = "Admin")]
         [HttpGet("folders/{folderId}/files")]
         public async Task<ActionResult> GetFilesInFolder(string folderId)
         {

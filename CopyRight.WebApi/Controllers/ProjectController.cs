@@ -1,10 +1,13 @@
 ﻿
 
+using CopyRight.Bl.Service;
 using CopyRight.Dto.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace CopyRight.WebApi.Controllers
 {
@@ -31,17 +34,27 @@ namespace CopyRight.WebApi.Controllers
                 {
                     if (_BlProject.IsCorrectDates(newProject.StartDate, newProject.EndDate))
                     {
-                        if (await _BlProject.CreateAsync(newProject) != null)
+                        try
                         {
-                            return StatusCode(200, newProject);
+                            _BlProject.CreateAsync(newProject);
+                            return StatusCode(200, $"the project added succeful");
                         }
-                        return BadRequest(500);
+                        catch (Exception ex)
+                        {
+                            throw new Exception(ex.Message);
+
+                        }
+                        
                     }
-                    return StatusCode(400, $"the startDate is  after the endDate");
+                    else
+                        return StatusCode(400, $"the startDate is  after the endDate");
                 }
-                return StatusCode(400, $"the name isnt valid");
+                else
+                    return StatusCode(400, $"the name isnt valid");
             }
-            return StatusCode(400, $"This customer not exist on db");
+            else
+                return StatusCode(400, $"This customer not exist on db");
+
 
 
         }
@@ -61,8 +74,54 @@ namespace CopyRight.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<Projects[]>> GetAllActive()
         {
-            List<Projects> p = await _BlProject.ReadAsync(o=>o.IsActive==true);
-            return Ok(p);
+            string token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "").Trim();
+
+            if (string.IsNullOrEmpty(token))
+            {
+                throw new ArgumentException("Token is missing or empty.");
+            }
+            var tokenValidationParameters = TokenService.GetTokenValidationParameters();
+            var tokenHandler = new JwtSecurityTokenHandler();
+            try
+            {
+                
+
+                tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken validatedToken);
+                var jwtToken = validatedToken as JwtSecurityToken;
+                var claims = jwtToken.Claims;
+                Console.WriteLine(claims);
+                var typeClaims = claims.Where(c => c.Type == "Type").Select(c => c.Value).ToList();
+                foreach (var typeClaim in typeClaims)
+                {
+
+
+                    if (typeClaims.Count > 0 && typeClaims[typeClaims.Count - 1] == "Worker")
+
+                    {
+                        List<Projects> projects = await _BlProject.ReadAsync(x => x.IsActive == true && x.Authorize == 1);
+                        return Ok(projects);
+                    }
+
+
+                    if (typeClaim == "Admin")
+                    {
+
+                        List<Projects> projects = await _BlProject.ReadAllAsync();
+                        return Ok(projects);
+
+                    }
+
+                }
+
+
+
+            }
+            catch (Exception ex) { }
+
+
+            return Ok("ok");
+
+
         }
         //[Authorize(Policy = "Admin")]
         [Route("getUnActiveProject")]
@@ -78,11 +137,59 @@ namespace CopyRight.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<Tasks>> GetAllTasks([FromQuery(Name = "id")] int id)
         {
-            List<Tasks> p = await _BlTasks.ReadAsync(o => o.Project.ProjectId == id);
-            return Ok(p);
+
+            string token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+            var tokenValidationParameters = TokenService.GetTokenValidationParameters();
+            var tokenHandler = new JwtSecurityTokenHandler();
+            try
+            {
+                tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken validatedToken);
+                var jwtToken = validatedToken as JwtSecurityToken;
+                var claims = jwtToken.Claims;
+                Console.WriteLine(claims);
+                var typeClaims = claims.Where(c => c.Type == "Type").Select(c => c.Value).ToList();
+                foreach (var typeClaim in typeClaims)
+                {
+                    Console.WriteLine($"Type Claim Value: {typeClaim}");
+                    if (typeClaims.Count > 0 && typeClaims[typeClaims.Count - 1] == "Worker")
+
+                    {
+                        Console.WriteLine("i am Worker");
+                        bool checkAuth = await _BlProject.ReadTaskAuthAsync(id);
+
+                        Console.WriteLine(checkAuth);
+                        Console.WriteLine(checkAuth);
+                        Console.WriteLine(checkAuth);
+                    
+                       
+
+                    }
+                    if (typeClaim == "Admin")
+                    {
+                        Console.WriteLine("i am admin");
+                        List<Tasks> p = await _BlTasks.ReadAsync(o => o.Project.ProjectId == id);
+                        return Ok(p);
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+
+            {
+            }
+
+
+            return Ok("ok");
 
 
         }
+
+
+
+
+
         [Authorize(Policy = "Worker")]
         [Route("getById")]
 
@@ -91,9 +198,61 @@ namespace CopyRight.WebApi.Controllers
         //[HttpGet("GetProjectById")]
         public async Task<ActionResult<Projects>> GetProjectById(int id)
         {
-         List< Projects >   p = await _BlProject.ReadAsync(i=>i.ProjectId==id);
-            return Ok(p.First());
+
+
+            string token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+            var tokenValidationParameters = TokenService.GetTokenValidationParameters();
+            var tokenHandler = new JwtSecurityTokenHandler();
+            try
+            {
+                tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken validatedToken);
+                var jwtToken = validatedToken as JwtSecurityToken;
+                var claims = jwtToken.Claims;
+                Console.WriteLine(claims);
+                var typeClaims = claims.Where(c => c.Type == "Type").Select(c => c.Value).ToList();
+                foreach (var typeClaim in typeClaims)
+                {
+                    { 
+                    Console.WriteLine($"Type Claim Value: {typeClaim}"); }
+                    if (typeClaims.Count > 0 && typeClaims[typeClaims.Count - 1] == "Worker")
+
+                    {
+                        Console.WriteLine("i am Worker");
+                        bool checkAuth = await _BlProject.ReadTaskAuthAsync(id);
+                        Console.WriteLine(checkAuth);
+                        if (checkAuth)
+                        {
+                            List<Projects> p = await _BlProject.ReadAsync(o => o.ProjectId == id);
+                            return Ok(p);
+                        }
+                        else if (!checkAuth)
+                        {
+                            return BadRequest("this project is not auth");
+                        }
+
+                    }
+                    if (typeClaim == "Admin")
+                    {
+                       
+                        List<Projects> p = await _BlProject.ReadAsync(o => o.ProjectId == id);
+                        return Ok(p);
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+
+            {
+            }
+            return Ok("ok");
         }
+
+
+       
+          
+     
         [Authorize(Policy = "Worker")]
         [HttpPut]
         public async Task<bool> UpdateProject(Dto.Models.Projects p)
