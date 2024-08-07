@@ -22,7 +22,7 @@ namespace CopyRight.WebApi.Controllers
 
 
         [HttpPost("upload")]
-        [Authorize(Policy="Admin")]
+        [Authorize(Policy="Customer")]
         public async Task<string> UploadFile(IFormFile file,[FromQuery] string nameFolder)
         {
             if (file == null || file.Length == 0)
