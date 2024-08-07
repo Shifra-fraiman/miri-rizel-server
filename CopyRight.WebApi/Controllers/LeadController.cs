@@ -115,7 +115,7 @@ namespace CopyRight.WebApi.Controllers
 
         [Authorize(Policy = "Worker")]
         [HttpPost("Replace")]
-        public async Task<ActionResult> replaceToCustomer([FromBody]Leads lead)
+        public async Task<ActionResult<Customers>> replaceToCustomer([FromBody]Leads lead)
         {
             try
             {
