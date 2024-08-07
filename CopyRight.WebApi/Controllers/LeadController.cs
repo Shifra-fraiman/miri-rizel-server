@@ -121,7 +121,7 @@ namespace CopyRight.WebApi.Controllers
             {
                 Customers customer = await _leadService.replaceToCustomer(lead);
                 if (customer != null)
-                    return Content(customer.ToString());
+                    return Ok(customer);
                 else
                     return NotFound("The replace faild!");
             }
