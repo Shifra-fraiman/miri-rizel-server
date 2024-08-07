@@ -77,7 +77,7 @@ namespace CopyRight.Bl.Service
                         status = s;
                 }
                 if(status == null)
-                    status = new Dal.Models.StatusCodeUser();
+                    status = new Dal.Models.StatusCodeUser() { Id = 1, Description = "Active" };
                
                     Customers c = new Customers()
                     {
@@ -90,9 +90,7 @@ namespace CopyRight.Bl.Service
                         Status = mapper.Map<Dto.Models.StatusCodeUser>(status),
                         CreatedDate = item.CreatedDate
                     };
-                
-                
-
+                Console.WriteLine(c.FirstName+" "+c.Status.Description);
                 var newCustomer = mapper.Map<Dal.Models.Customer>(c);
                 return mapper.Map<Dto.Models.Customers>(await dalManager.customers.CreateAsync(newCustomer));
             }
