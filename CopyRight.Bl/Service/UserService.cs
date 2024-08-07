@@ -2,13 +2,10 @@
 using CopyRight.Bl.Interfaces;
 using CopyRight.Dal;
 using CopyRight.Dto.Models;
-using System.Net.Mail;
 using System.Net;
-using System.Text.RegularExpressions;
-using AutoMapper.Internal.Mappers;
-using System.Net.Http;
-using Org.BouncyCastle.Crypto.Macs;
+using System.Net.Mail;
 using System.Net.Mime;
+using System.Text.RegularExpressions;
 
 namespace CopyRight.Bl.Service
 {
@@ -183,7 +180,6 @@ namespace CopyRight.Bl.Service
             string smtpUsername = "simcha993451@gmail.com";
             string smtpPassword = "wwdt ahbt lgum bbvt";
             bool enableSsl = true;
-
             // קבלת הנתיב הנוכחי של הקובץ UserService.cs
            // string currentFolder = Directory.GetCurrentDirectory();
             // בניית נתיב לתיקייה בה נמצאת התמונה
@@ -254,7 +250,6 @@ namespace CopyRight.Bl.Service
             </div>
         </body>
         </html>";
-
                 message.Body = body;
                 /*
                 // צירוף הלוגו למייל
