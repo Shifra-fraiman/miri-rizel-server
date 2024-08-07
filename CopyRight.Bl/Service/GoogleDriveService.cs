@@ -102,7 +102,7 @@ namespace CopyRight.Bl.Service
 
         public async Task<string> GetOrCreateUserFolderAsync(string userName)
         {
-            string parentFolderId = "1h99QmpROSgDnlrUckbAWnhWzskCMXUxQ";
+            string parentFolderId = "1S_MLvm9F_2UKlNzw62qiNCuZF7U0c8g-";
             var request = _driveService.Files.List();
             request.Q = $"mimeType='application/vnd.google-apps.folder' and '{parentFolderId}' in parents and name='{userName}'";
             request.Fields = "files(id, name)";
@@ -120,7 +120,7 @@ namespace CopyRight.Bl.Service
         public async Task<string> UploadUserFileAsync(Stream fileStream, string fileName, string mimeType, string userName)
 
         {
-            string parentFolderId = "1h99QmpROSgDnlrUckbAWnhWzskCMXUxQ";
+            string parentFolderId = "1S_MLvm9F_2UKlNzw62qiNCuZF7U0c8g-";
 
             var userFolderId = await GetOrCreateUserFolderAsync(userName);
 
