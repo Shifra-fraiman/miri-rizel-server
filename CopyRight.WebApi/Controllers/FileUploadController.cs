@@ -53,7 +53,7 @@ namespace CopyRight.WebApi.Controllers
 
         public async Task<ActionResult> GetFolders()
         {
-            string parentFolderId = "1h99QmpROSgDnlrUckbAWnhWzskCMXUxQ";
+            string parentFolderId = "1S_MLvm9F_2UKlNzw62qiNCuZF7U0c8g-";
             try
             {
                 var folders = await _googleDriveService.GetFolderInParentFolderAsync(parentFolderId);
