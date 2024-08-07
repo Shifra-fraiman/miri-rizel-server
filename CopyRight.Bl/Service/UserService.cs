@@ -60,11 +60,11 @@ namespace CopyRight.Bl.Service
             }
         }
 
-        public async Task<User> LogInGoogleAsync(string email, string name)
+        public async Task<User> LogInGoogleAsync(string email)
         {
             try
             {
-                return mapper.Map<User>(await dalManager.users.LogInGoogleAsync(email, name));
+                return mapper.Map<User>(await dalManager.users.LogInGoogleAsync(email));
             }
             catch (Exception ex)
             {

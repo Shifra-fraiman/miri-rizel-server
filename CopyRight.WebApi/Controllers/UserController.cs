@@ -68,13 +68,13 @@ namespace CopyRight.WebApi.Controllers
         }
 
         [HttpGet("LoginGoogle")]
-        public async Task<ActionResult<User>> LoginGoogle([FromQuery(Name = "email")] string email, [FromQuery(Name = "name")] string name)
+        public async Task<ActionResult<User>> LoginGoogle([FromQuery(Name = "email")] string email)
         {
             try
             {
-                if (email == null || name == null)
-                    return BadRequest("Invalid firstName/lastName/email/password!");
-                User userFound = await _userService.LogInGoogleAsync(email, name);
+                if (email == null)
+                    return BadRequest("Invalid email!");
+                User userFound = await _userService.LogInGoogleAsync(email);
                 if (userFound == null)
                 {
                     return NotFound("User not found");

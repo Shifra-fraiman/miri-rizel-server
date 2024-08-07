@@ -8,7 +8,7 @@ namespace CopyRight.Bl.Interfaces
         Task<bool> DeleteByIdAsync(int id);
         Task<bool> DeleteByEmailAsync(string email);
         Task<User> LogInAsync(string email, string password);
-        Task<User> LogInGoogleAsync(string email, string name);
+        Task<User> LogInGoogleAsync(string email);
 
         Task<User> GetByIdAsync(int id);
         Task<User> GetByEmailAsync(string email);
