@@ -19,6 +19,8 @@ public partial class User
 
     public DateTime? CreatedDate { get; set; }
 
+    public bool? IsActive { get; set; }
+
     public virtual RoleCode RoleNavigation { get; set; } = null!;
 
     public virtual ICollection<Task> Tasks { get; set; } = new List<Task>();

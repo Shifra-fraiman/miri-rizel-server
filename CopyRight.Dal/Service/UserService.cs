@@ -64,7 +64,9 @@ namespace CopyRight.Dal.Service
         {
             
             try
+
             {
+                item.IsActive = true;   
                 Console.WriteLine($"item: {item.UserId} {item.FirstName} {item.Email} {item.Role} {item.CreatedDate}");
                
                 await db.Users.AddAsync(item);
@@ -84,9 +86,10 @@ namespace CopyRight.Dal.Service
                 User user = db.Users.FirstOrDefault(c => c.UserId == item);
                 if (user == null)
                     throw new Exception("customer does not exist in DB");
-                db.Users.Remove(user);
-               await db.SaveChangesAsync();
-                return true;
+               // db.Users.Remove(user);
+               //await db.SaveChangesAsync();
+               user.IsActive = false;   
+                return await UpdateAsync(user);
             }
             catch(Exception ex) 
             {
@@ -156,6 +159,7 @@ namespace CopyRight.Dal.Service
                 existingLead.Role= item.Role;
                 existingLead.Tasks= item.Tasks;
                 existingLead.Password= item.Password;
+                existingLead.IsActive= item.IsActive;   
                 db.SaveChangesAsync();
                 return true;
             }
