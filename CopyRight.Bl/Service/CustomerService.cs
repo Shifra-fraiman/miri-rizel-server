@@ -33,13 +33,22 @@ namespace CopyRight.Bl.Service
         {
             try
             {
+                List<Dal.Models.Customer> customers = await dalManager.customers.ReadAsync(o => o.Email == customer.Email);
                 var newCustomer = mapper.Map<Dal.Models.Customer>(customer);
                 return mapper.Map<Dto.Models.Customers>(await dalManager.customers.CreateAsync(newCustomer));
             }
             catch (Exception ex)
             {
-                return null;
+                throw new Exception(ex.Message);
             }
+        }
+        public async Task<bool> existsEmailAsync(string email)
+        {
+            try
+            {
+                return await dalManager.customers.existsEmailAsync(email);
+            }
+            catch (Exception ex) { throw new Exception(ex.Message, ex); }
         }
         public async Task<bool> DeletByEmailAsync(string email)
         {

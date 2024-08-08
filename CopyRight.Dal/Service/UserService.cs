@@ -40,19 +40,24 @@ namespace CopyRight.Dal.Service
             }
         }
 
-        public async Task<User> LogInGoogleAsync(string email, string name)
+        public async Task<User> LogInGoogleAsync(string email)
         {
             User userFound = await db.Users.Include(t => t.RoleNavigation).FirstOrDefaultAsync(user => user.Email == email);
             try
             {
-                if (userFound != null && userFound.FirstName==name)
-                {
-                    return userFound;
-                }
-                else
-                {
-                    return null;
-                }
+                
+               
+                if (userFound != null)
+               
+
+               
+                        return userFound;
+                    
+                    else
+                    {
+                        return null;
+                    }
+              
             }
             catch (Exception ex)
             {

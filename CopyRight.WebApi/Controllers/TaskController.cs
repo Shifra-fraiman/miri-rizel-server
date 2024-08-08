@@ -203,12 +203,24 @@ namespace CopyRight.WebApi.Controllers
             }
         }
 
+        //[Authorize(Policy = "Worker")]
+        // [HttpPut]
+        // [Route("googleCalendar")]
+        // public async Task<bool> UpdateGoogleCalendarAsync([FromQuery(Name = "taskId")] int taskId, [FromQuery(Name = "googleId")] string googleId)
+        // {
+        //     return await _taskService.UpdateGoogleCalendarAsync(taskId, googleId);
+        // }
+
         [Authorize(Policy = "Worker")]
-        [HttpPut]
-        [Route("googleCalendar")]
-        public async Task<bool> UpdateGoogleCalendarAsync(int taskId, string googleId)
+        [HttpPost("googleCalendar")]
+        public async Task<bool> UpdatePassword([FromBody] UpdateRequest request)
         {
-            return await _taskService.UpdateGoogleCalendarAsync(taskId, googleId);
+            return await _taskService.UpdateGoogleCalendarAsync(request.taskId, request.googleId);
         }
+    }
+    public class UpdateRequest
+    {
+        public int taskId { get; set; }
+        public string googleId { get; set; }
     }
 }

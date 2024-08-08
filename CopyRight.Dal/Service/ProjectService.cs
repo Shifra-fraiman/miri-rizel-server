@@ -125,36 +125,65 @@ namespace CopyRight.Dal.Service
         }
 
 
-        public async Task<bool> UpdateAsync(Project item)
-        {
-            try
-            {
-                List<Project> projects = await db.Projects.ToListAsync();
-                int index = projects.FindIndex(x => x.ProjectId == item.ProjectId);
-                if (index == -1)
-                    throw new Exception("user does not exist in DB");
-                var existingproject = db.Projects.FirstOrDefault(x => x.ProjectId == item.ProjectId);
-                existingproject.Name = item.Name;
-                existingproject.Status = item.Status;
-                existingproject.Tasks = item.Tasks;
-                existingproject.StartDate = item.StartDate;
-                existingproject.EndDate = item.EndDate;
-                existingproject.Authorize = item.Authorize;     
-                existingproject.Description = item.Description;
-                existingproject.CreatedDate = item.CreatedDate;
-                existingproject.CustomerId = item.CustomerId;
-                existingproject.IsActive = item.IsActive;   
-                List<Project> projectss = await db.Projects.ToListAsync();
-                projectss[index] = existingproject;
-                await db.SaveChangesAsync();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return false;
-            }
-        }
+        // public async Task<bool> UpdateAsync(Project item)
+        // {
+        //     try
+        //     {
+        //         List<Project> projects = await db.Projects.ToListAsync();
+        //         int index = projects.FindIndex(x => x.ProjectId == item.ProjectId);
+        //         if (index == -1)
+        //             throw new Exception("user does not exist in DB");
+        //         var existingproject = db.Projects.FirstOrDefault(x => x.ProjectId == item.ProjectId);
+        //         existingproject.Name = item.Name;
+        //         existingproject.Status = item.Status;
+        //         existingproject.Tasks = item.Tasks;
+        //         existingproject.StartDate = item.StartDate;
+        //         existingproject.EndDate = item.EndDate;
+        //         existingproject.Authorize = item.Authorize;     
+        //         existingproject.Description = item.Description;
+        //         existingproject.CreatedDate = item.CreatedDate;
+        //         existingproject.CustomerId = item.CustomerId;
+        //         existingproject.IsActive = item.IsActive;   
+        //         List<Project> projectss = await db.Projects.ToListAsync();
+        //         projectss[index] = existingproject;
+        //         await db.SaveChangesAsync();
+        //         return true;
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         Console.WriteLine(ex.Message);
+        //         return false;
+        //     }
+        // }
+
+         public async Task<bool> UpdateAsync(Project item)
+ {
+     try
+     {
+         var data = db.Projects.FirstOrDefault(x => x.ProjectId == item.ProjectId);
+         if (data != null)
+         {
+             data.StartDate = EnsureUtc(item.StartDate);
+             data.EndDate = EnsureUtc(item.EndDate);
+             data.CreatedDate = EnsureUtc(item.CreatedDate);
+             data.Name = item.Name;
+             data.Description = item.Description;
+             data.Status = item.Status;
+             data.Tasks = item.Tasks;
+             data.Description = item.Description;
+             data.CustomerId = item.CustomerId;
+             data.IsActive = item.IsActive;
+             data.Authorize=item.Authorize;
+             db.SaveChanges();
+             return true;
+         }
+         return false;
+     }
+     catch (Exception ex)
+     {
+         throw new Exception(ex.Message);
+     }
+ }
         public async Task<Project> GetByIdAsync(int id)
         {
             try

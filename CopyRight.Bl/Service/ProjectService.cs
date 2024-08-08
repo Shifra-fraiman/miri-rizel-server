@@ -31,7 +31,7 @@ namespace CopyRight.Bl.Service
         }
         public async Task<Projects> CreateAsync(Projects item)
         {
-            Project p = new() { CreatedDate = DateTime.Now, ProjectId = item.ProjectId, Name = item.Name, Description = item.Description, StartDate = item.StartDate, EndDate = item.EndDate, Status = item.Status.Id, CustomerId = item.Customer.CustomerId ,IsActive=true};
+            Project p = new() { CreatedDate = DateTime.Now, ProjectId = item.ProjectId, Name = item.Name, Description = item.Description, StartDate = item.StartDate, EndDate = item.EndDate, Status = item.Status.Id, CustomerId = item.Customer.CustomerId ,IsActive=true,Authorize=item.Authorize};
             return mapper.Map<Dto.Models.Projects>(await proj.CreateAsync(mapper.Map<Dal.Models.Project>(p)));
 
             var newCustomer = mapper.Map<Dal.Models.Project>(item);

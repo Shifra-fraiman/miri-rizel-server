@@ -28,7 +28,7 @@ namespace CopyRight.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Leads>>> ReadAllAsync()
         {
-           
+
             try
             {
                 List<Leads> lead = await _leadService.ReadAllAsync();
@@ -40,7 +40,7 @@ namespace CopyRight.WebApi.Controllers
                 throw new Exception(ex.ToString(), ex);
             }
         }
-       [Authorize(Policy = "Worker")]
+        [Authorize(Policy = "Worker")]
         [HttpGet("GetById")]
         public async Task<ActionResult<Leads>> GetByIdAsync([FromQuery(Name = "id")] int id)
         {
@@ -56,7 +56,7 @@ namespace CopyRight.WebApi.Controllers
             {
                 throw new Exception(ex.Message, ex);
             }
-            
+
         }
         [Authorize(Policy = "Worker")]
         [HttpPost]
@@ -73,7 +73,22 @@ namespace CopyRight.WebApi.Controllers
             {
                 throw new Exception(ex.Message, ex);
             }
-           
+
+        }
+        [Authorize(Policy = "Worker")]
+        [HttpGet("existsEmail")]
+        public async Task<ActionResult<bool>> existsEmail([FromQuery(Name = "Email")] string customerEmail)
+        {
+            try
+            {
+                bool existsEmail = await _leadService.existsEmailAsync(customerEmail);
+                return Ok(existsEmail);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+
         }
         [Authorize(Policy = "Worker")]
         [HttpPut]
@@ -91,9 +106,9 @@ namespace CopyRight.WebApi.Controllers
             {
                 throw new Exception(ex.Message, ex);
             }
-           
+
         }
-       [Authorize(Policy = "Admin")]
+        [Authorize(Policy = "Admin")]
         [HttpDelete]
         public async Task<ActionResult<bool>> DeleteAsync([FromQuery(Name = "id")] int id)
         {
@@ -110,7 +125,25 @@ namespace CopyRight.WebApi.Controllers
             {
                 throw new Exception(ex.Message, ex);
             }
-            
+
+        }
+
+        [Authorize(Policy = "Worker")]
+        [HttpPost("Replace")]
+        public async Task<ActionResult<Customers>> replaceToCustomer([FromBody]Leads lead)
+        {
+            try
+            {
+                Customers customer = await _leadService.replaceToCustomer(lead);
+                if (customer != null)
+                    return Ok(customer);
+                else
+                    return NotFound("The replace faild!");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
     }
 }

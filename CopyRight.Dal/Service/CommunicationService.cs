@@ -94,11 +94,27 @@ namespace CopyRight.Dal.Service
             throw new NotImplementedException();
         }
 
-        public async Task<List<Communication>> GetByIdAsync(int id)
+        public async Task<List<Communication>> GetByIdLAsync(int id)
         {
             try
             {
-                return await db.Communications.Where(x => x.RelatedId == id).ToListAsync();
+                return await db.Communications.Where(x => x.RelatedId == id && x.RelatedTo == 2).ToListAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new ApplicationException("An error occurred while saving data to the database. Please try again later.", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("error-", ex);
+            }
+        }
+
+        public async Task<List<Communication>> GetByIdCAsync(int id)
+        {
+            try
+            {
+                return await db.Communications.Where(x => x.RelatedId == id && x.RelatedTo==1).ToListAsync();
             }
             catch (DbUpdateException ex)
             {

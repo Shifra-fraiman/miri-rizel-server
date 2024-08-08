@@ -92,7 +92,13 @@ namespace CopyRight.Dal.Service
                 throw new Exception(ex.Message);
             }
         }
-
+        public async Task<bool> existsEmailAsync(string email)
+        {
+            List<Lead> Leads = await ReadAsync(c => c.Email == email);
+            if (Leads.Count == 0)
+                return false;
+            return true;
+        }
         public async Task<Lead> GetByIdAsync(int id)
         {
             try

@@ -57,7 +57,7 @@ namespace CopyRight.WebApi.Controllers
             try
             {
                 Customers customer = await _customerService.CreateAsync(newCustomer);
-                string fullName = newCustomer.FirstName + " " + customer.LastName;
+                string fullName = customer.FirstName + " " + customer.LastName;
 
                 googleDriveService.GetOrCreateUserFolderAsync(fullName);
 
@@ -65,6 +65,11 @@ namespace CopyRight.WebApi.Controllers
             }
             catch (Exception ex)
             {
+                if (ex.Message.Contains("email is already"))
+                {
+                    return Conflict("Customer with this email already exists.");
+                }
+                else
                 throw new Exception(ex.Message, ex);
             }
         }
@@ -95,9 +100,22 @@ namespace CopyRight.WebApi.Controllers
             {
                 throw new Exception(ex.Message, ex);
             }
-
-
         }
+            [Authorize(Policy = "Worker")]
+            [HttpGet("existsEmail")]
+            public async Task<ActionResult<bool>> existsEmail([FromQuery(Name = "Email")] string customerEmail)
+            {
+                try
+                {
+                    bool existsEmail = await _customerService.existsEmailAsync(customerEmail);
+                    return Ok(existsEmail);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message, ex);
+                }
+
+            }
         [Authorize(Policy = "Admin")]
         [HttpDelete]
         public async Task<ActionResult<bool>> DeleteByIdAsync([FromQuery(Name = "customerId")] int customerId)

@@ -9,8 +9,9 @@ namespace CopyRight.Dal.Interfaces
 {
     public interface ICommunication: IDalCrud<Communication>
     {
-        Task<List<Communication>> GetByIdAsync(int id);
-       Task<List<RelatedToCode>> ReadRealatedToAllAsync();
+        Task<List<Communication>> GetByIdLAsync(int id);
+        Task<List<Communication>> GetByIdCAsync(int id);
+        Task<List<RelatedToCode>> ReadRealatedToAllAsync();
 
     }
 }

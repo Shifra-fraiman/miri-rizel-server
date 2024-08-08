@@ -8,5 +8,6 @@ namespace CopyRight.Bl.Interfaces
         Task<bool> DeletByEmailAsync(string email);
         Task<Customers> GetByIdAsync(int customerId);
         Task<List<StatusCodeUser>> GetCustomerStatusAsync();
+        Task<bool> existsEmailAsync(string email);
     }
 }
