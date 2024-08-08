@@ -40,9 +40,9 @@ public partial class CopyRightContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        //PGPASSWORD=RvXri1TomeRGZIq4MsJVzrmPrNGQvGj0 psql -h dpg-cqkalq2ju9rs738jmrag-a.singapore-postgres.render.com -U copyrightdb_user copyrightdb
-        optionsBuilder.UseNpgsql("Host=dpg-cqlndt08fa8c73b73c3g-a.singapore-postgres.render.com;Port=5432;Database=copyrightdb_ue70;Username=miri_rizel;Password=M1HONrwZnY85hnyBMraOFUomYoWzBDNz;");
+    {        
+         //PGPASSWORD=RvXri1TomeRGZIq4MsJVzrmPrNGQvGj0 psql -h dpg-cqkalq2ju9rs738jmrag-a.singapore-postgres.render.com -U copyrightdb_user copyrightdb
+         optionsBuilder.UseNpgsql("Host=dpg-cqlndt08fa8c73b73c3g-a.singapore-postgres.render.com;Port=5432;Database=copyrightdb_ue70;Username=miri_rizel;Password=M1HONrwZnY85hnyBMraOFUomYoWzBDNz;");
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

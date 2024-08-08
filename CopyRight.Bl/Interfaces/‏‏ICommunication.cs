@@ -10,7 +10,9 @@ namespace CopyRight.Bl.Interfaces
 {
     public interface ICommunication: IBlcrud<Communications>
     {
-        Task<List<Communications>> GetByIdAsync(int id);
+        Task<List<Communications>> GetByIdLAsync(int id);
+
+        Task<List<Communications>> GetByIdCAsync(int id);
 
     }
 }
