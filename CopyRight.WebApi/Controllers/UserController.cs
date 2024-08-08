@@ -203,7 +203,7 @@ namespace CopyRight.WebApi.Controllers
         {
             try
             {
-                return await _userService.ReadAllAsync();
+                return await _userService.ReadAsync(o=>o.IsActive==true);
             }
             catch (Exception ex)
             {
