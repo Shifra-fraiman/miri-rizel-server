@@ -101,7 +101,7 @@ namespace CopyRight.WebApi.Controllers
                 throw new Exception(ex.Message, ex);
             }
         }
-            [Authorize(Policy = "Admin")]
+            [Authorize(Policy = "Worker")]
             [HttpGet("existsEmail")]
             public async Task<ActionResult<bool>> existsEmail([FromQuery(Name = "Email")] string customerEmail)
             {

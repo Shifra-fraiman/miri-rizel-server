@@ -23,6 +23,14 @@ namespace CopyRight.Bl.Service
         {
             return mapper.Map<Leads>(await dalManager.leads.CreateAsync(mapper.Map<Lead>(item)));
         }
+        public async Task<bool> existsEmailAsync(string email)
+        {
+            try
+            {
+                return await dalManager.leads.existsEmailAsync(email);
+            }
+            catch (Exception ex) { throw new Exception(ex.Message, ex); }
+        }
         public async Task<bool> DeleteAsync(int item)
         {
             return await dalManager.leads.DeleteAsync(item);

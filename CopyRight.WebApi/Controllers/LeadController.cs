@@ -76,6 +76,21 @@ namespace CopyRight.WebApi.Controllers
 
         }
         [Authorize(Policy = "Worker")]
+        [HttpGet("existsEmail")]
+        public async Task<ActionResult<bool>> existsEmail([FromQuery(Name = "Email")] string customerEmail)
+        {
+            try
+            {
+                bool existsEmail = await _leadService.existsEmailAsync(customerEmail);
+                return Ok(existsEmail);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+
+        }
+        [Authorize(Policy = "Worker")]
         [HttpPut]
         public async Task<ActionResult<Lead>> UpdateAsync([FromBody] Leads lead)
         {
