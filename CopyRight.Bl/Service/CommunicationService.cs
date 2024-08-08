@@ -128,12 +128,16 @@ namespace CopyRight.Bl.Service
             throw new NotImplementedException();
         }
 
-        public async Task<List<Communications>> GetByIdAsync(int id)
+        public async Task<List<Communications>> GetByIdLAsync(int id)
         {
-            return mapper.Map<List<Dal.Models.Communication>, List<Communications>>(await dalManager.communications.GetByIdAsync(id));
+            return mapper.Map<List<Dal.Models.Communication>, List<Communications>>(await dalManager.communications.GetByIdLAsync(id));
         }
 
-      
+
+        public async Task<List<Communications>> GetByIdCAsync(int id)
+        {
+            return mapper.Map<List<Dal.Models.Communication>, List<Communications>>(await dalManager.communications.GetByIdCAsync(id));
+        }
 
     }
 }

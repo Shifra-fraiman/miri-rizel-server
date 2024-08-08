@@ -43,14 +43,34 @@ namespace CopyRight.WebApi.Controllers
             }
         }
 
-        [HttpGet("GetById")]
+        [HttpGet("GetByIdC")]
         [Authorize(Policy = "Admin")]
 
-        public async Task<ActionResult<Communications>> GetByIdAsync([FromQuery(Name = "id")] int id)
+        public async Task<ActionResult<Communications>> GetByIdCAsync([FromQuery(Name = "id")] int id)
         {
             try
             {
-                var l = await _CommunicationService.GetByIdAsync(id);
+                var l = await _CommunicationService.GetByIdCAsync(id);
+                if (l != null)
+                    return Ok(l);
+                else
+                    return NotFound("Communication not found!");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+
+        }
+
+        [HttpGet("GetByIdL")]
+        [Authorize(Policy = "Admin")]
+
+        public async Task<ActionResult<Communications>> GetByIdLAsync([FromQuery(Name = "id")] int id)
+        {
+            try
+            {
+                var l = await _CommunicationService.GetByIdLAsync(id);
                 if (l != null)
                     return Ok(l);
                 else
@@ -101,5 +121,7 @@ namespace CopyRight.WebApi.Controllers
             }
 
         }
+
+
     }
 }
