@@ -49,6 +49,13 @@ namespace CopyRight.Dal.Service
             }
         }
 
+        public async Task<bool> existsEmailAsync(string email)
+        {
+           List<Customer> cstomers= await ReadAsync(c => c.Email == email); 
+            if (cstomers.Count == 0)
+                return false;
+            return true;
+        }
         public async  Task<Customer> GetByIdAsync(int customerId)
         {
             try

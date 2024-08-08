@@ -10,5 +10,7 @@ namespace CopyRight.Dal.Interfaces
     public interface ILead: IDalCrud<Lead>
     {
         Task<Lead> GetByIdAsync(int id);
+        Task<bool> existsEmailAsync(string email);
+
     }
 }

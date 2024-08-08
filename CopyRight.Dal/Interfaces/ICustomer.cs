@@ -11,5 +11,6 @@ namespace CopyRight.Dal.Interfaces
 
         Task<Customer> GetByIdAsync(int customerId);
         Task<List<StatusCodeUser>> GetCustomerStatusAsync();
+        Task<bool> existsEmailAsync(string email);
     }
 }
