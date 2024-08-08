@@ -17,13 +17,13 @@ public partial class Project
 
     public int? Status { get; set; }
 
-    public int? Authorize { get; set; }
-
     public bool? IsActive { get; set; }
 
     public int? CustomerId { get; set; }
 
     public DateTime? CreatedDate { get; set; }
+
+    public int? Authorize { get; set; }
 
     public virtual RoleCode? AuthorizeNavigation { get; set; }
 

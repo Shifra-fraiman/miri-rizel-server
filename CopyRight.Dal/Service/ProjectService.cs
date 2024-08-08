@@ -84,14 +84,11 @@ namespace CopyRight.Dal.Service
         {
             try
             {
-
                 return await db.Projects
                             .Include(t => t.Customer).Include(p => p.Customer.StatusNavigation)
                             .Include(t => t.StatusNavigation).Include(o => o.Authorize)
                             .Where(x => x.IsActive == true && x.Authorize == 1).ToListAsync();
-
             }
-          
             catch (DbUpdateException ex)
             {
                 throw new ApplicationException("An error occurred while take data to the database. Please try again later.", ex);
@@ -142,6 +139,7 @@ namespace CopyRight.Dal.Service
                 existingproject.Tasks = item.Tasks;
                 existingproject.StartDate = item.StartDate;
                 existingproject.EndDate = item.EndDate;
+                existingproject.Authorize = item.Authorize;     
                 existingproject.Description = item.Description;
                 existingproject.CreatedDate = item.CreatedDate;
                 existingproject.CustomerId = item.CustomerId;

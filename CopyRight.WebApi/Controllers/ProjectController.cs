@@ -27,10 +27,8 @@ namespace CopyRight.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(Projects newProject)
         {
-
             if (await _BlProject.IsOnTheDB(newProject.Customer.CustomerId))
             {
-              
                     if (_BlProject.IsCorrectDates(newProject.StartDate, newProject.EndDate))
                     {
                         try
@@ -43,11 +41,9 @@ namespace CopyRight.WebApi.Controllers
                             throw new Exception(ex.Message);
 
                         }
-                        
                     }
                     else
                         return StatusCode(400, $"the startDate is  after the endDate");
-
             }
             else
                 return StatusCode(400, $"This customer not exist on db");
@@ -81,8 +77,6 @@ namespace CopyRight.WebApi.Controllers
             var tokenHandler = new JwtSecurityTokenHandler();
             try
             {
-                
-
                 tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken validatedToken);
                 var jwtToken = validatedToken as JwtSecurityToken;
                 var claims = jwtToken.Claims;
@@ -158,9 +152,6 @@ namespace CopyRight.WebApi.Controllers
                         Console.WriteLine(checkAuth);
                         Console.WriteLine(checkAuth);
                         Console.WriteLine(checkAuth);
-                    
-                       
-
                     }
                     if (typeClaim == "Admin")
                     {
@@ -170,10 +161,8 @@ namespace CopyRight.WebApi.Controllers
 
                     }
                 }
-
             }
             catch (Exception ex)
-
             {
             }
 
