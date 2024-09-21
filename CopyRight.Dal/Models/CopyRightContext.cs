@@ -40,8 +40,10 @@ public partial class CopyRightContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=dpg-cqlndt08fa8c73b73c3g-a.singapore-postgres.render.com;Port=5432;Database=copyrightdb_ue70;Username=miri_rizel;Password=M1HONrwZnY85hnyBMraOFUomYoWzBDNz");
+       => optionsBuilder.UseNpgsql("Host=dpg-crngc068ii6s73er2850-a.oregon-postgres.render.com;Port=5432;Database=miri_rizel_db;Username=miri_rizel_db_user;Password=RXgKmpvTUwmJSGNhvQEZc576cPE7VZYb");
+
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //   => optionsBuilder.UseSqlServer("Server=DESKTOP-E0FAPSB\\SQLEXPRESS;Database=CopyRight;TrustServerCertificate=True;Trusted_Connection=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
