@@ -67,9 +67,10 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddControllers();
 
+
 builder.Services.AddDbContext<CopyRightContext>(options =>
-options.UseNpgsql(builder.Configuration.GetConnectionString("Host=dpg-cqlndt08fa8c73b73c3g-a.singapore-postgres.render.com;Port=5432;Database=copyrightdb_ue70;Username=miri_rizel;Password=M1HONrwZnY85hnyBMraOFUomYoWzBDNz;")));
-//builder.Services.AddDbContext<CopyRightContext>(options => options.UseSqlServer("Server=.;Database=CopyRight;TrustServerCertificate=True;Trusted_Connection=True;"));
+options.UseNpgsql(builder.Configuration.GetConnectionString("Host=dpg-crngc068ii6s73er2850-a.oregon-postgres.render.com;Port=5432;Database=mmiri_rizel_db;Username=miri_rizel_db_user;Password=RXgKmpvTUwmJSGNhvQEZc576cPE7VZYb;")));
+//builder.Services.AddDbContext<CopyRightContext>(options => options.UseSqlServer("Server=DESKTOP-E0FAPSB\\SQLEXPRESS;Database=CopyRight;TrustServerCertificate=True;Trusted_Connection=True;"));
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<GoogleDriveService>();
 builder.Services.AddScoped(typeof(IDocument), typeof(DocumentService));

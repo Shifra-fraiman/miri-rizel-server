@@ -169,115 +169,13 @@ namespace CopyRight.Bl.Service
             password = BCrypt.Net.BCrypt.HashPassword(password);
             return await dalManager.users.UpdatePassword(email, password);
         }
-        /*
-        public async Task<bool> SendResetEmail(string email, string tempPassword)
-        {
-            // יצירת חיבור לשרת SMTP
-            string smtpHost = "smtp.gmail.com";
-            int smtpPort = 587;
-            //string smtpUsername = "systemcopyright1@gmail.com";
-            //string smtpPassword = "sziq eykg egpi imcb";
-            string smtpUsername = "simcha993451@gmail.com";
-            string smtpPassword = "wwdt ahbt lgum bbvt";
-            bool enableSsl = true;
-            // קבלת הנתיב הנוכחי של הקובץ UserService.cs
-           // string currentFolder = Directory.GetCurrentDirectory();
-            // בניית נתיב לתיקייה בה נמצאת התמונה
-           // string logoPath = Path.Combine(currentFolder, "..", "logo.jpeg");
-           // logoPath = Path.GetFullPath(logoPath); // הופך את הנתיב לנתיב מוחלט
-
-            using (var client = new SmtpClient(smtpHost, smtpPort))
-            {
-                client.UseDefaultCredentials = false;
-                client.Credentials = new NetworkCredential(smtpUsername, smtpPassword);
-                client.EnableSsl = enableSsl;
-
-                var message = new MailMessage();
-                message.From = new MailAddress(smtpUsername, "CopyRight-noreply");
-                message.To.Add(email);
-                message.Subject = "בקשתך לאיפוס סיסמה";
-                message.IsBodyHtml = true; // הגדרת גוף המייל כ-HTML
-
-                string contactDetails = $@"{smtpUsername} :צור קשר ";
-                string body = $@"
-        <html>
-        <head>
-            <style>
-                .container{{
-                    font-family:""Varela Round"",sans-serif;
-                    background-color:#f4f4f4;
-                    padding:5px;
-                    text-align:center;
-                    align-items:center;
-                }}
-                .email-container {{
-                    margin:80px; 
-                    background-color: #ffffff;
-                    padding: 20px;
-                    margin: 40px auto;
-                    width: 80%;
-                    max-width: 500px;
-                    border: 1px solid #dddddd;
-                    text-align:center;
-                }}
-                .logo {{
-                    width: 125px;
-                    margin-top: 20px;
-                }}
-                .verification-code {{
-                    background-color: #ffffff;
-                    border: 1px solid #dddddd;
-                    padding: 10px;
-                    margin: 20px 0;
-                    display: inline-block;
-                    font-size:20px;
-                }}
-                .contact-details {{
-                    margin-top: 10px;
-                    font-size: 12px;
-                    color: #888888;
-                }}
-            </style>
-        </head>
-        <body>
-            <div class='container'>
-                <div class='email-container'>
-                  <h2>בקשתך לאיפוס סיסמה</h2>
-                  <p>:קוד האימות שלך הוא</p>
-                  <div class='verification-code'>{tempPassword}</div>
-                  <div class='contact-details'>{contactDetails}</div>
-                 </div>
-            </div>
-        </body>
-        </html>";
-                message.Body = body;
-                /*
-                // צירוף הלוגו למייל
-                //var logo = new LinkedResource(logoPath, MediaTypeNames.Image.Jpeg)
-                //{
-                 //   ContentId = "logo"
-                //};
-                var htmlView = AlternateView.CreateAlternateViewFromString(body, null, MediaTypeNames.Text.Html);
-                //htmlView.LinkedResources.Add(logo);
-                message.AlternateViews.Add(htmlView);
-                try
-                {
-                    await client.SendMailAsync(message);
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-        }*/
-
         public async Task<bool> SendResetEmail(string email, string tempPassword)
         {
             // יצירת חיבור לשרת SMTP
             string smtpHost = "smtp.gmail.com";
             int smtpPort = 587;
             string smtpUsername = "simcha993451@gmail.com";
+            string emailContact = "m0548474619@gmail.com";
             string smtpPassword = "wwdt ahbt lgum bbvt";
             bool enableSsl = true;
 
@@ -296,7 +194,7 @@ namespace CopyRight.Bl.Service
                 message.Subject = "בקשתך לאיפוס סיסמה";
                 message.IsBodyHtml = true; // הגדרת גוף המייל כ-HTML
 
-                string contactDetails = $@"{smtpUsername} :צור קשר ";
+                string contactDetails = $@"{emailContact} :צור קשר ";
                 string body = $@"
         <html>
         <head>
