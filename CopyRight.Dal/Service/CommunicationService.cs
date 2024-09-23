@@ -125,6 +125,26 @@ namespace CopyRight.Dal.Service
                 throw new Exception("error-", ex);
             }
         }
+
+        public async Task<bool> UpdateCommunicationAsync(int id,int code, int relatedId)
+        {
+            try
+            {
+                var item = await db.Communications.FirstOrDefaultAsync(x => x.CommunicationId == id);
+                if(item!=null)
+                {
+                    item.RelatedTo = code;
+                    item.RelatedId = relatedId;
+                    await db.SaveChangesAsync();
+                    return true;
+                }
+                return false;
+            }
+            catch(DbUpdateException ex)
+            {
+                throw new ApplicationException(ex.Message, ex);
+            }
+        }
     }
 
 }

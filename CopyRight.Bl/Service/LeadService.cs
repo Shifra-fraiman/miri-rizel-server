@@ -98,7 +98,6 @@ namespace CopyRight.Bl.Service
                         Status = mapper.Map<Dto.Models.StatusCodeUser>(status),
                         CreatedDate = item.CreatedDate
                     };
-                Console.WriteLine(c.FirstName+" "+c.Status.Description);
                 var newCustomer = mapper.Map<Dal.Models.Customer>(c);
                 return mapper.Map<Dto.Models.Customers>(await dalManager.customers.CreateAsync(newCustomer));
             }

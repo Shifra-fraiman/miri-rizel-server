@@ -12,6 +12,7 @@ namespace CopyRight.Dal.Interfaces
         Task<List<Communication>> GetByIdLAsync(int id);
         Task<List<Communication>> GetByIdCAsync(int id);
         Task<List<RelatedToCode>> ReadRealatedToAllAsync();
+        Task<bool> UpdateCommunicationAsync(int id, int code, int relatedId);
 
     }
 }

@@ -114,8 +114,9 @@ namespace CopyRight.Bl.Service
         public async Task<List<Communications>> ReadAllAsync()
         {
 
+            var list=await dalManager.communications.ReadAllAsync();
             //return mapper.Map<List<Dal.Models.Communication>, List<Communications>>(await dalManager.communications.ReadAllAsync());
-            return await ConvertList(dalManager.communications.ReadAllAsync());   
+            return mapper.Map<List<Communications>>(list);
         }
 
         public Task<List<Communications>> ReadAsync(Predicate<Communications> filter)
@@ -126,6 +127,11 @@ namespace CopyRight.Bl.Service
         public Task<bool> UpdateAsync(Communications item)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> UpdateCommunicationAsync(int id, int code, int relatedId)
+        {
+            return await dalManager.communications.UpdateCommunicationAsync(id, code, relatedId);
         }
 
         public async Task<List<Communications>> GetByIdLAsync(int id)
