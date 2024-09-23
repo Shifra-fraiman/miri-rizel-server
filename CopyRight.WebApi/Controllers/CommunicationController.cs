@@ -121,7 +121,32 @@ namespace CopyRight.WebApi.Controllers
             }
 
         }
+        [Authorize(Policy = "Admin")]
+        [HttpPost("UpdateCommunication")]
+        public async Task<IActionResult> UpdateCommunication([FromBody] UpdateCommunicationRequest request)
+        {
+            try
+            {
+                bool ans =await  _CommunicationService.UpdateCommunicationAsync(request.CommunicationId, request.RelatedTo, request.RelatedId);
+                if (ans == true)
+                    return Ok();
+                else
+                    return BadRequest();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+
+        }
 
 
+    }
+
+    public class UpdateCommunicationRequest
+    {
+        public int CommunicationId { get; set; }
+        public int RelatedTo { get; set; }
+        public int RelatedId { get; set; }
     }
 }

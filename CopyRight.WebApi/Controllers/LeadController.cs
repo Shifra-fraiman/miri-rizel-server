@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using CopyRight.Dal.Models;
 using CopyRight.Bl;
 using Microsoft.AspNetCore.Authorization;
+using CopyRight.Dal.Interfaces;
 
 namespace CopyRight.WebApi.Controllers
 {
@@ -19,8 +20,8 @@ namespace CopyRight.WebApi.Controllers
     [Route("[controller]")]
     public class LeadController : ControllerBase
     {
-        public ILead _leadService { get; set; }
-        public LeadController(ILead leadService)
+        public Bl.Interfaces.ILead _leadService { get; set; }
+        public LeadController(Bl.Interfaces.ILead leadService)
         {
             this._leadService = leadService;
         }
@@ -32,7 +33,6 @@ namespace CopyRight.WebApi.Controllers
             try
             {
                 List<Leads> lead = await _leadService.ReadAllAsync();
-                if (lead.Count == 0) { return NotFound("Lead  Not exsist "); }
                 return lead;
             }
             catch (Exception ex)
@@ -130,7 +130,7 @@ namespace CopyRight.WebApi.Controllers
 
         [Authorize(Policy = "Worker")]
         [HttpPost("Replace")]
-        public async Task<ActionResult<Customers>> replaceToCustomer([FromBody]Leads lead)
+        public async Task<ActionResult<Customers>> replaceToCustomer([FromBody] Leads lead)
         {
             try
             {
@@ -145,5 +145,9 @@ namespace CopyRight.WebApi.Controllers
                 throw new Exception(ex.Message, ex);
             }
         }
+
+       
     }
+  
+
 }

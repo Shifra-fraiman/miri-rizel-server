@@ -13,6 +13,7 @@ namespace CopyRight.Bl.Interfaces
         Task<List<Communications>> GetByIdLAsync(int id);
 
         Task<List<Communications>> GetByIdCAsync(int id);
+        Task<bool> UpdateCommunicationAsync(int id, int code, int relatedId);
 
     }
 }
