@@ -101,17 +101,12 @@ namespace CopyRight.WebApi.Controllers
                         return Ok(projects);
 
                     }
-
                 }
-
-
-
             }
-            catch (Exception ex) { }
-
-
-            return Ok("ok");
-
+            catch (Exception ex) {
+                return BadRequest(ex);
+            }
+            return BadRequest();
 
         }
         [Authorize(Policy = "Admin")]
