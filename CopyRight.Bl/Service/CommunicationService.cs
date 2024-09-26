@@ -85,7 +85,7 @@ namespace CopyRight.Bl.Service
                 RelatedId = c.RelatedId,
                 RelatedTo = newrtc,
                 Type = c.Type,
-                name = name,
+                Name = name,
                 CommunicationId = c.CommunicationId
             };
             return new1;
@@ -93,7 +93,6 @@ namespace CopyRight.Bl.Service
         public async Task<Communications> CreateAsync(Communications item)
         {
             try
-
             {
                 Dal.Models.Communication d=new Dal.Models.Communication() {CommunicationId=item.CommunicationId,RelatedTo=item.RelatedTo.Id,RelatedId=item.RelatedId,Date=item.Date,Type=item.Type,Details=item.Details };
                 //Dal.Models.Communication newTask = mapper.Map<Communications, Dal.Models.Communication>(item);
@@ -113,10 +112,31 @@ namespace CopyRight.Bl.Service
 
         public async Task<List<Communications>> ReadAllAsync()
         {
+            var list = await dalManager.communications.ReadAllAsync();
+            var data = mapper.Map<List<Communications>>(list);
 
-            var list=await dalManager.communications.ReadAllAsync();
-            //return mapper.Map<List<Dal.Models.Communication>, List<Communications>>(await dalManager.communications.ReadAllAsync());
-            return mapper.Map<List<Communications>>(list);
+            foreach (var communication in data)
+            {
+                if (communication.RelatedTo.Id == 2) 
+                {
+                    var leads = await dalManager.leads.ReadAllAsync();
+                    var lead=leads.FirstOrDefault(x=>x.LeadId== communication.RelatedId);
+                    if (lead!=null)
+                    {
+                        communication.Name = lead.FirstName + " " + lead.LastName;
+                    }
+                }
+                else if (communication.RelatedTo.Id == 1) 
+                {
+                    var customers = await dalManager.customers.ReadAllAsync();
+                    var customer = customers.FirstOrDefault(x => x.CustomerId == communication.RelatedId);
+                    if (customer != null)
+                    {
+                        communication.Name = customer.FirstName + " " + customer.LastName;
+                    }
+                }
+            }
+            return mapper.Map<List<Communications>>(data);
         }
 
         public Task<List<Communications>> ReadAsync(Predicate<Communications> filter)

@@ -19,7 +19,7 @@ namespace CopyRight.Dto.Models
         public relatedToCode RelatedTo { get; set; } = null!;
 
         public int RelatedId { get; set; }
-        public string name { get; set; }
+        public string Name { get; set; }
 
     }
 }

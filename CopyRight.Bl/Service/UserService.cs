@@ -180,9 +180,8 @@ namespace CopyRight.Bl.Service
             // יצירת חיבור לשרת SMTP
             string smtpHost = "smtp.gmail.com";
             int smtpPort = 587;
-            string smtpUsername = "simcha993451@gmail.com";
-            string emailContact = "email.copyright.noreply@gmail.com";
-            string smtpPassword = "wwdt ahbt lgum bbvt";
+            string smtpUsername = "email.copyright.noreply@gmail.com";
+            string smtpPassword = "hihr jqkb yohr mbwr";
             bool enableSsl = true;
 
             // כתובת ה-URL של הלוגו
@@ -201,7 +200,7 @@ namespace CopyRight.Bl.Service
                 message.Subject = "בקשתך לאיפוס סיסמה";
                 message.IsBodyHtml = true; // הגדרת גוף המייל כ-HTML
 
-                string contactDetails = $@"{emailContact} :צור קשר ";
+                string contactDetails = $@"{smtpUsername} :צור קשר ";
                 string body = $@"
         <html>
         <head>
@@ -270,67 +269,6 @@ namespace CopyRight.Bl.Service
                 }
             }
         }
-
-        //public async Task<bool> SendResetEmail(string email, string tempPassword)
-        //{
-        //    // פרטי החשבון וההתחברות
-        //    string smtpHost = "smtp.gmail.com";
-        //    int smtpPort = 587;
-        //    bool enableSsl = true;
-
-        //    // הורידי את credentials.json מ-Google Cloud Console
-        //    UserCredential credential;
-
-        //    using (var stream = new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
-        //    {
-        //        credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-        //            GoogleClientSecrets.Load(stream).Secrets,
-        //            new[] { "https://mail.google.com/" },
-        //            "user",
-        //            CancellationToken.None,
-        //            new FileDataStore("token.json", true));
-        //            //new LocalServerCodeReceiver(); // זה מגדיר שימוש בשרת מקומי עם כתובת localhost
-        //    }
-
-        //    // קבלת ה-token
-        //    var accessToken = credential.Token.AccessToken;
-
-        //    // יצירת חיבור ל-SMTP עם OAuth2
-        //    var smtpClient = new SmtpClient(smtpHost, smtpPort)
-        //    {
-        //        UseDefaultCredentials = false,
-        //        Credentials = new NetworkCredential("email.copyright.noreply@gmail.com", accessToken),
-        //        EnableSsl = enableSsl
-        //    };
-
-        //    var message = new MailMessage
-        //    {
-        //        From = new MailAddress("your_email@gmail.com", "CopyRight"),
-        //        Subject = "בקשתך לאיפוס סיסמה",
-        //        IsBodyHtml = true,
-        //        Body = $@"
-        //    <html>
-        //    <body>
-        //        <h2>בקשתך לאיפוס סיסמה</h2>
-        //        <p>:קוד האימות שלך הוא {tempPassword}</p>
-        //    </body>
-        //    </html>"
-        //    };
-
-        //    message.To.Add(email);
-
-        //    try
-        //    {
-        //        await smtpClient.SendMailAsync(message);
-        //        return true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine($"Error sending email: {ex.Message}");
-        //        return false;
-        //    }
-        //}
-
         public string RandomaPassword()
         {
 
@@ -358,9 +296,8 @@ namespace CopyRight.Bl.Service
         {
             string smtpHost = "smtp.gmail.com";
             int smtpPort = 587;
-            string smtpUsername = "simcha993451@gmail.com";
-            string emailContact = "email.copyright.noreply@gmail.com";
-            string smtpPassword = "wwdt ahbt lgum bbvt";
+            string smtpUsername = "email.copyright.noreply@gmail.com";
+            string smtpPassword = "hihr jqkb yohr mbwr";
             bool enableSsl = true;
             // יצירת חיבור לשרת SMTP
             using (var client = new SmtpClient(smtpHost, smtpPort))
@@ -371,7 +308,7 @@ namespace CopyRight.Bl.Service
                 // יצירת הודעת מייל
                 var message = new MailMessage();
                 message.From = new MailAddress(smtpUsername, "CopyRight");
-                message.To.Add(emailContact);
+                message.To.Add(smtpUsername);
                 message.Subject = "נרשם משתמש חדש לאתר שלך";
                 message.Body = $"{name} נרשם בהצלחה ";
                 // שליחת המייל
