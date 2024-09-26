@@ -70,7 +70,7 @@ namespace CopyRight.Dto.Models
             CreateMap<Dal.Models.RoleCode, RoleCode>().ReverseMap();
             CreateMap<Dal.Models.Communication, Communications>()
                             .ForMember(dest => dest.RelatedTo, opt => opt.MapFrom(src => src.RelatedToNavigation))
-                            .ForMember(dest => dest.name, opt => opt.Ignore())
+                            .ForMember(dest => dest.Name, opt => opt.Ignore())
                             .ReverseMap()
                             .ForMember(dest => dest.RelatedToNavigation, opt => opt.Ignore()); CreateMap<Dal.Models.StatusCodeProject, StatusCodeProject>().ReverseMap();
             CreateMap<Dal.Models.PriorityCode, PriorityCode>().ReverseMap();
