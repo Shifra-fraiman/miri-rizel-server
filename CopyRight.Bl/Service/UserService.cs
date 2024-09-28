@@ -244,12 +244,9 @@ namespace CopyRight.Bl.Service
         <body>
             <div class='container'>
                 <div class='email-container'>
-                    <img class='logo' src='{logoUrl}' alt='Logo'>
                     <h2>בקשתך לאיפוס סיסמה</h2>
                     <p>:קוד האימות שלך הוא</p>
                     <div class='verification-code'>{tempPassword}</div>
-                    <div><p>אם אינך מזהה את הבקשה הזו, פשוט התעלם ממנה</p></div>
-                    <div>במקרה של בעיה ניתן לפנות אלינו</div>
                     <div class='contact-details'>{contactDetails}</div>
                 </div>
             </div>

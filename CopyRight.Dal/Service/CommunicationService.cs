@@ -41,7 +41,7 @@ namespace CopyRight.Dal.Service
                 if (l == null)
                     throw new Exception("lead does not exist in DB");
                 db.Communications.Remove(l);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return true;
             }
             catch (Exception ex)
